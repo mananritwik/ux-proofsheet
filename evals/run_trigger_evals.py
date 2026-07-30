@@ -14,13 +14,18 @@ reproducible rather than asserted.
 Usage:
     pip install anthropic
     export ANTHROPIC_API_KEY=...            # or `ant auth login`
-    python run_trigger_evals.py             # 3 judges, model = $JUDGE_MODEL or claude-opus-5
+    python run_trigger_evals.py             # 3 judges, model = $JUDGE_MODEL or claude-haiku-4-5
     python run_trigger_evals.py --judges 5
-    JUDGE_MODEL=claude-haiku-4-5 python run_trigger_evals.py   # cheaper judge
+    JUDGE_MODEL=claude-opus-5 python run_trigger_evals.py   # stronger judge to re-verify
+
+The default judge is Haiku: this is a routing/classification eval that runs often,
+so a small model is the right tool and keeps runs cheap. Bump JUDGE_MODEL to a
+larger model when you want a stricter re-check. (Any judge here must support
+structured outputs; Haiku 4.5 does.)
 
 Env:
     ANTHROPIC_API_KEY   your API key (or use `ant auth login`)
-    JUDGE_MODEL         judge model id (default: claude-opus-5)
+    JUDGE_MODEL         judge model id (default: claude-haiku-4-5)
 """
 import argparse
 import json
@@ -34,7 +39,7 @@ try:
 except ImportError:
     sys.exit("This runner needs the Anthropic SDK. Install it with:  pip install anthropic")
 
-DEFAULT_MODEL = os.environ.get("JUDGE_MODEL", "claude-opus-5")
+DEFAULT_MODEL = os.environ.get("JUDGE_MODEL", "claude-haiku-4-5")
 
 # The routing catalog the judge chooses from. ux-proofsheet sits next to its real
 # sibling design skills so the eval measures discrimination, not just recall.
