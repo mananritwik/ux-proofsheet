@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Example review — ux-proofsheet</title>
+<!--
+  ILLUSTRATIVE SAMPLE. Self-contained (no external assets) so it renders anywhere,
+  including GitHub Pages. The "design under review" and the per-finding crops are
+  inline mockups standing in for Figma get_screenshot() output; a real report
+  embeds actual screenshots (via scripts/embed_images.py). Content is a fictional
+  field-service app; app names are real public products used as benchmark refs.
+-->
+<style>
+  :root{
+    --ink:#101418;--sub:#5b6570;--line:#e6e9ed;--bg:#f6f7f9;--card:#fff;
+    --brand:#1069cf;--brandd:#0054b5;--brandbg:#e8f3ff;
+    --high:#b50012;--highbg:#ffe8ea;--med:#9a6700;--medbg:#fff4d6;
+    --low:#0a7d3c;--lowbg:#e6f7ec;--info:#5a00b5;--infobg:#f3e8ff;--radius:12px;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);line-height:1.5;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1080px;margin:0 auto;padding:32px 24px 80px}
+  header.top{border-bottom:1px solid var(--line);padding-bottom:20px;margin-bottom:24px}
+  .eyebrow{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--sub);font-weight:700}
+  h1{font-size:28px;margin:6px 0 8px;letter-spacing:-.01em}
+  .meta{font-size:13px;color:var(--sub)}.meta a{color:var(--brand);text-decoration:none}
+  .scorecard{display:grid;grid-template-columns:1.1fr 2fr;gap:18px;background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:20px;margin:18px 0 28px}
+  .verdict{font-size:15px}.verdict b{color:var(--ink)}
+  .position{margin-top:10px;font-size:13px;color:var(--sub)}
+  .position .badge{display:inline-block;font-weight:700;border-radius:999px;padding:2px 10px;font-size:12px;background:var(--brandbg);color:var(--brand)}
+  .dims{display:grid;grid-template-columns:1fr;gap:9px;align-self:center}
+  .dim{display:flex;align-items:center;gap:10px;font-size:13px}
+  .dim .name{flex:1;color:var(--sub)}
+  .bar{flex:0 0 110px;height:7px;border-radius:999px;background:var(--line);overflow:hidden}
+  .bar i{display:block;height:100%;background:var(--brand);border-radius:999px}
+  .dim .n{font-weight:700;width:30px;text-align:right}
+  .tally{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+  .pill{font-size:12px;font-weight:700;padding:5px 11px;border-radius:999px;display:inline-flex;gap:6px;align-items:center}
+  .pill .dot{width:8px;height:8px;border-radius:50%}
+  .p-high{background:var(--highbg);color:var(--high)}.p-high .dot{background:var(--high)}
+  .p-med{background:var(--medbg);color:var(--med)}.p-med .dot{background:var(--med)}
+  .p-low{background:var(--lowbg);color:var(--low)}.p-low .dot{background:var(--low)}
+  .p-info{background:var(--infobg);color:var(--info)}.p-info .dot{background:var(--info)}
+  section{margin-bottom:34px}
+  h2{font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:var(--sub);border-bottom:1px solid var(--line);padding-bottom:8px;margin:0 0 18px}
+
+  /* ---------- design under review (inline mock stands in for a screenshot) ---------- */
+  .designrow{display:flex;gap:22px;align-items:flex-start}
+  .designrow .cap{font-size:13px;color:var(--sub);flex:1;padding-top:6px}
+  .designrow .cap b{color:var(--ink)}
+  .phone{width:300px;flex:0 0 300px;background:#fff;border-radius:30px;padding:9px;border:1px solid #e4e8ee;box-shadow:0 16px 44px rgba(16,40,80,.16)}
+  .screen{background:#fff;border-radius:23px;overflow:hidden;border:1px solid #eef1f4}
+  .sb{display:flex;justify-content:space-between;padding:7px 16px 3px;font-size:11px;font-weight:600;color:#27292b}
+  .hdr{display:flex;align-items:center;gap:7px;padding:7px 11px;border-bottom:1px solid #f0f2f5}
+  .logo{width:24px;height:24px;border-radius:6px;background:var(--high);color:#fff;font-weight:700;font-size:10px;display:flex;align-items:center;justify-content:center}
+  .team{font-weight:700;font-size:14px}.chev{color:var(--sub);font-size:10px}.grow{flex:1}
+  .ic{width:24px;height:24px;border-radius:6px;background:#f4f6f8;display:flex;align-items:center;justify-content:center;font-size:13px;color:#27292b}
+  .av{width:24px;height:24px;border-radius:50%;background:linear-gradient(135deg,#ffd16b,#f0a93f)}
+  .scr{padding:11px}
+  .greet{font-size:16px;font-weight:700}.greet small{display:block;font-size:11px;font-weight:400;color:var(--sub)}
+  .hero{margin-top:11px;border-radius:12px;padding:12px;color:#fff;background:linear-gradient(135deg,#0b5fc0,#1069cf)}
+  .hero .l{font-size:11px;opacity:.9;font-weight:600}.hero .a{font-size:26px;font-weight:700}.hero .m{font-size:11px;opacity:.92}
+  .hero .b{display:flex;gap:7px;margin-top:9px}
+  .bw{background:#fff;color:var(--brandd);font-size:11px;font-weight:700;border-radius:7px;padding:6px 10px}
+  .bwg{background:rgba(255,255,255,.16);color:#fff;border:1px solid rgba(255,255,255,.5);font-size:11px;font-weight:700;border-radius:7px;padding:6px 10px}
+  .mod{margin-top:12px}.mh{display:flex;align-items:center;font-size:13px;font-weight:700;margin-bottom:7px}
+  .mh .cnt{background:var(--high);color:#fff;font-size:10px;border-radius:999px;padding:0 6px;margin-left:5px}.mh .lk{margin-left:auto;font-size:11px;color:var(--brandd);font-weight:600}
+  .attncard{border:1px solid var(--line);border-radius:11px;padding:11px}
+  .attncard .t{font-size:14px;font-weight:700;color:var(--high)}.attncard .d{font-size:11px;color:var(--sub);margin-top:1px}
+  .attncard .b{display:flex;gap:7px;justify-content:flex-end;margin-top:9px}
+  .btn{font-size:11px;font-weight:700;border-radius:7px;padding:6px 10px}
+  .btn.g{background:#fff;color:var(--brandd);border:1px solid var(--brand)}.btn.t{color:var(--brandd)}
+  .qa{display:flex;gap:6px}.qa .t{flex:1;text-align:center}
+  .qa .i{height:38px;border-radius:10px;background:var(--brandbg);color:var(--brand);display:flex;align-items:center;justify-content:center;font-size:16px;margin-bottom:4px}
+  .qa .t:nth-child(2) .i{background:var(--brand);color:#fff;outline:2px solid var(--high);outline-offset:2px}
+  .qa .l{font-size:10px;font-weight:600;line-height:1.15}
+  .inv{display:flex;padding:7px 0;border-top:1px solid #eef1f4;font-size:12px}.inv:first-child{border-top:none}
+  .inv .rt{margin-left:auto;text-align:right}.inv .am{font-weight:700}
+  .badge-od{font-size:9px;font-weight:700;color:var(--high);background:var(--highbg);border-radius:999px;padding:1px 6px}
+  .nav{display:flex;border-top:1px solid #eef1f4;padding:6px 0}
+  .nav .t{flex:1;text-align:center;font-size:9px;color:var(--sub)}.nav .t .i{font-size:14px;display:block}.nav .t.on{color:var(--brandd);font-weight:700}
+
+  /* ---------- findings with element crops ---------- */
+  .find{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);margin-bottom:14px;overflow:hidden}
+  .find .head{display:flex;gap:12px;align-items:flex-start;padding:14px 16px 10px}
+  .find .id{font:600 12px ui-monospace,SFMono-Regular,Menlo,monospace;color:var(--sub);background:var(--bg);border:1px solid var(--line);border-radius:6px;padding:2px 7px}
+  .find .title{font-weight:600;font-size:15px;flex:1}
+  .find .body{display:flex;gap:14px;align-items:flex-start;padding:0 16px 14px;font-size:14px;color:#2b333b}
+  .findmain{flex:1;min-width:0}
+  .crop{flex:0 0 138px;width:138px;border:1px solid var(--line);border-radius:8px;background:#fbfcfd;padding:9px;font-size:11px;overflow:hidden}
+  .crop .clabel{font-size:9px;text-transform:uppercase;letter-spacing:.04em;color:var(--sub);font-weight:700;margin-bottom:6px}
+  .row{display:flex;gap:8px;margin-top:8px}.row .k{flex:0 0 84px;color:var(--sub);font-size:12.5px;font-weight:600}
+  .row .v a{color:var(--brand);text-decoration:none;font-weight:600}.row .v code{font:600 12px ui-monospace,Menlo,monospace;color:var(--sub)}
+  .quote{font:500 13px ui-monospace,SFMono-Regular,Menlo,monospace;background:var(--bg);border-left:3px solid var(--line);padding:3px 9px;border-radius:0 6px 6px 0;display:inline-block}
+  .sev{font-size:11px;font-weight:700;padding:3px 9px;border-radius:999px;white-space:nowrap}
+  .s-high{background:var(--highbg);color:var(--high)}.s-med{background:var(--medbg);color:var(--med)}
+  .s-low{background:var(--lowbg);color:var(--low)}.s-info{background:var(--infobg);color:var(--info)}
+  .diff{display:inline-block;font-size:11px;font-weight:700;border-radius:999px;padding:2px 8px;background:var(--lowbg);color:var(--low)}
+  .works{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:14px 18px}
+  .works ul{margin:0;padding:0}.works li{list-style:none;margin:7px 0;font-size:14px;padding-left:24px;position:relative}
+  .works li::before{content:"✓";position:absolute;left:0;color:var(--low);font-weight:700}
+  table.prev{width:100%;border-collapse:collapse;font-size:13px;background:var(--card);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}
+  table.prev th,table.prev td{padding:10px 12px;text-align:left;border-bottom:1px solid var(--line)}
+  table.prev th{background:var(--bg);font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:var(--sub)}
+  table.prev tr:last-child td{border-bottom:none}
+  .prevtag{font-size:11px;font-weight:700;border-radius:999px;padding:2px 9px}
+  .prevtag.u{background:var(--lowbg);color:var(--low)}.prevtag.c{background:var(--brandbg);color:var(--brand)}.prevtag.r{background:var(--medbg);color:var(--med)}
+  .followups{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:14px 18px;font-size:14px}
+  .followups code{font:600 12px ui-monospace,SFMono-Regular,Menlo,monospace;color:var(--brand);background:var(--brandbg);border-radius:4px;padding:1px 5px}
+  .ratio{font:600 12px ui-monospace,Menlo,monospace;background:var(--bg);border-radius:4px;padding:1px 5px}
+  /* crop mini-elements */
+  .m-btnrow{display:flex;gap:5px;justify-content:flex-end;margin-top:20px}
+  .m-btn{font-size:9px;font-weight:700;border-radius:5px;padding:4px 7px}
+  .m-btn.g{border:1px solid var(--brand);color:var(--brandd)}.m-btn.t{color:var(--brandd)}
+  .m-title{font-size:11px;font-weight:700;color:var(--high)}
+  .m-tok{font:600 10px ui-monospace,Menlo,monospace;color:#2b333b;line-height:1.7}
+  .m-tok .bad{color:var(--high);background:var(--highbg);border-radius:3px;padding:0 3px}
+  .m-hero{border-radius:8px;padding:8px;color:#fff;background:linear-gradient(135deg,#0b5fc0,#1069cf)}
+  .m-hero .a{font-size:18px;font-weight:700}.m-hero .l{font-size:9px;opacity:.9}
+  .m-inv{font-size:10px;padding:3px 0;border-top:1px solid #eef1f4;display:flex}.m-inv:first-child{border-top:none}.m-inv .r{margin-left:auto;color:var(--sub)}
+
+  .oknote{background:var(--lowbg);border:1px solid #bfe6cc;color:#0a5a2c;border-radius:10px;padding:11px 16px;font-size:13px;margin-bottom:18px}
+  .refgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  .ref{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;display:flex;flex-direction:column}
+  .ph{height:180px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:15px;text-shadow:0 1px 3px rgba(0,0,0,.25)}
+  .ref .rb{padding:12px 14px;display:flex;flex-direction:column;gap:6px;flex:1}
+  .ref .app{font-weight:700;font-size:14px;display:flex;justify-content:space-between}.ref .app a{font-weight:500;font-size:12px;color:var(--brand);text-decoration:none}
+  .ref .pat{font-size:13px;color:#2b333b}.ref .supports{margin-top:auto;font-size:11.5px;color:var(--sub)}.ref .supports b{color:var(--med)}
+  ol.rec{counter-reset:r;list-style:none;padding:0;margin:0}
+  ol.rec li{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:13px 16px 13px 52px;position:relative;margin-bottom:10px;font-size:14px}
+  ol.rec li::before{counter-increment:r;content:counter(r);position:absolute;left:14px;top:12px;width:24px;height:24px;border-radius:50%;background:var(--brand);color:#fff;font-weight:700;font-size:13px;display:flex;align-items:center;justify-content:center}
+  .foot{margin-top:40px;border-top:1px solid var(--line);padding-top:16px;font-size:12px;color:var(--sub)}
+  @media(max-width:720px){.scorecard,.refgrid{grid-template-columns:1fr}.designrow{flex-direction:column}}
+  @media(max-width:560px){.find .body{flex-direction:column}.crop{width:100%;flex-basis:auto}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="top">
+    <div class="eyebrow">ux-proofsheet · competitive design review · sample</div>
+    <h1>Mobile Home — Field Service App</h1>
+    <div class="meta">Source: <a href="#">Design Refresh › “Home”</a> · Competitor set: Jobber, Housecall Pro, Stripe, Deel · Generated 30 Jul 2026</div>
+  </header>
+
+  <div class="scorecard">
+    <div>
+      <div class="verdict"><b>A clear step up on hierarchy — the money-owed hero and reordered modules put decisions before shortcuts. Most issues are copy and token hygiene, not structure.</b></div>
+      <div class="position">Competitive position: <span class="badge">On par → slightly ahead</span> of the field-service market on information hierarchy; behind on copy consistency.</div>
+      <div class="tally">
+        <span class="pill p-high"><span class="dot"></span>2 High</span>
+        <span class="pill p-med"><span class="dot"></span>4 Medium</span>
+        <span class="pill p-low"><span class="dot"></span>2 Low</span>
+        <span class="pill p-info"><span class="dot"></span>3 Fix before share</span>
+      </div>
+    </div>
+    <div class="dims">
+      <div class="dim"><span class="name">Navigation &amp; IA</span><span class="bar"><i style="width:80%"></i></span><span class="n">4</span></div>
+      <div class="dim"><span class="name">UX copy</span><span class="bar"><i style="width:40%"></i></span><span class="n">2</span></div>
+      <div class="dim"><span class="name">Visual &amp; tokens</span><span class="bar"><i style="width:60%"></i></span><span class="n">3</span></div>
+      <div class="dim"><span class="name">Accessibility</span><span class="bar"><i style="width:70%"></i></span><span class="n">3.5</span></div>
+    </div>
+  </div>
+
+  <!-- ============ THE DESIGN UNDER REVIEW ============ -->
+  <section>
+    <h2>The design under review</h2>
+    <div class="designrow">
+      <div class="phone"><div class="screen">
+        <div class="sb"><span>12:30</span><span>●●● ▮</span></div>
+        <div class="hdr"><div class="ic">☰</div><div class="logo">L</div><div class="team">Locksmiths</div><div class="chev">▾</div><div class="grow"></div><div class="ic">◔</div><div class="av"></div></div>
+        <div class="scr">
+          <div class="greet">Good morning, Ritwik<small>Fri, 22 May</small></div>
+          <div class="hero"><div class="l">You're owed</div><div class="a">$3,892</div><div class="m">7 open invoices · 2 overdue</div>
+            <div class="b"><span class="bw">Send reminders</span><span class="bwg">Collect</span></div></div>
+          <div class="mod"><div class="mh">Needs attention <span class="cnt">4</span><span class="lk">Show all</span></div>
+            <div class="attncard"><div class="t">2 disputes · $2,322</div><div class="d">Respond within 7 days to avoid auto-loss</div>
+              <div class="b"><span class="btn t">Ignore</span><span class="btn g">Review disputes</span></div></div></div>
+          <div class="mod"><div class="mh" style="font-size:11px;color:var(--sub)">Shortcuts</div>
+            <div class="qa"><div class="t"><div class="i">▤</div><div class="l">Create invoice</div></div>
+              <div class="t"><div class="i">$</div><div class="l">Quick collect</div></div>
+              <div class="t"><div class="i">≣</div><div class="l">Create estimate</div></div>
+              <div class="t"><div class="i">⛭</div><div class="l">Create job</div></div></div></div>
+          <div class="mod"><div class="mh">Pending invoices<span class="lk">See all</span></div>
+            <div class="inv"><div>Sam Altman<div style="color:var(--sub);font-size:10px">Apr 22, 2026</div></div><div class="rt"><div class="am">$232.23</div><span class="badge-od">7d overdue</span></div></div>
+            <div class="inv"><div>Sam Altman<div style="color:var(--sub);font-size:10px">Apr 22, 2026</div></div><div class="rt"><div class="am">$232.23</div><span class="badge-od">7d overdue</span></div></div></div>
+        </div>
+        <div class="nav"><div class="t on"><span class="i">⌂</span>Home</div><div class="t"><span class="i">⛭</span>Jobs</div><div class="t"><span class="i">≣</span>Estimates</div><div class="t"><span class="i">▤</span>Invoices</div><div class="t"><span class="i">◍</span>Balance</div></div>
+      </div></div>
+      <div class="cap"><b>What it is.</b> The proposed home for a field-service app, reordered around money and decisions. Below, each finding shows a crop of the exact element it refers to and links straight to that layer in Figma. <em>(In this sample the crops are inline mockups; a real report embeds actual Figma screenshots.)</em></div>
+    </div>
+  </section>
+
+  <!-- ============ WHAT'S WORKING ============ -->
+  <section>
+    <h2>What's working</h2>
+    <div class="works"><ul>
+      <li><b>Priorities before shortcuts.</b> Money-owed and “Needs attention” sit above the create-actions — decisions outrank tools. This is the right call and matches Jobber/Stripe.</li>
+      <li><b>Money-first hero.</b> Leading with what you're owed is a deliberate, defensible differentiator for an owner audience (keep it — see D2).</li>
+      <li><b>Inline team switcher.</b> Moving the switcher into the header resolves the team's own canvas note about the old popup — good response to feedback.</li>
+    </ul></div>
+  </section>
+
+  <!-- ============ FINDINGS ============ -->
+  <section>
+    <h2>UX copy &amp; terminology</h2>
+
+    <div class="find">
+      <div class="head"><span class="id">C1</span><span class="title">“Ignore” on a financial-dispute alert is harsh — it tells the user to walk away from money owed</span><span class="sev s-high">HIGH</span></div>
+      <div class="body">
+        <div class="crop"><div class="clabel">Element · C1</div>
+          <div class="m-title">2 disputes · $2,322</div>
+          <div style="color:var(--sub);font-size:9px;margin-top:2px">Respond within 7 days…</div>
+          <div class="m-btnrow"><span class="m-btn t">Ignore</span><span class="m-btn g">Review disputes</span></div>
+        </div>
+        <div class="findmain">
+          Pairs <span class="quote">Review disputes</span> with <span class="quote">Ignore</span> — which reads as dismissing money at stake.
+          <div class="row"><div class="k">Fix</div><div class="v">Use <span class="quote">Dismiss</span> or <span class="quote">Not now</span> — non-destructive, keeps the safe action primary.</div></div>
+          <div class="row"><div class="k">Backs</div><div class="v">Deel uses <b>Pay</b> / <b>Review</b>; Klarna frames overdue alerts empathetically (benchmark).</div></div>
+          <div class="row"><div class="k">Layer</div><div class="v"><a href="https://figma.com/design/AbC123/Home?node-id=575-4638">Open in Figma ↗</a> · <code>575:4638</code></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="find">
+      <div class="head"><span class="id">C2</span><span class="title">“Quick collect” breaks the verb pattern of the other actions</span><span class="sev s-med">MEDIUM</span></div>
+      <div class="body">
+        <div class="crop"><div class="clabel">Element · C2</div>
+          <div style="display:flex;gap:4px;text-align:center">
+            <div style="flex:1"><div style="height:22px;border-radius:6px;background:var(--brandbg)"></div><div style="font-size:8px;margin-top:2px">Create invoice</div></div>
+            <div style="flex:1"><div style="height:22px;border-radius:6px;background:var(--brand);outline:2px solid var(--high);outline-offset:1px"></div><div style="font-size:8px;margin-top:2px;font-weight:700">Quick collect</div></div>
+            <div style="flex:1"><div style="height:22px;border-radius:6px;background:var(--brandbg)"></div><div style="font-size:8px;margin-top:2px">Create est.</div></div>
+          </div>
+        </div>
+        <div class="findmain">
+          The other three read <span class="quote">Create invoice / estimate / job</span>; <span class="quote">Quick collect</span> breaks the pattern and is ambiguous alone.
+          <div class="row"><div class="k">Fix</div><div class="v">Consider <span class="quote">Collect payment</span> for parallelism and clarity.</div></div>
+          <div class="row"><div class="k">Layer</div><div class="v"><a href="https://figma.com/design/AbC123/Home?node-id=575-4616">Open in Figma ↗</a> · <code>575:4616</code></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Visual &amp; design tokens</h2>
+
+    <div class="find">
+      <div class="head"><span class="id">D1</span><span class="title">Misspelled token names will ship into code</span><span class="sev s-high">HIGH</span></div>
+      <div class="body">
+        <div class="crop"><div class="clabel">Bound vars</div>
+          <div class="m-tok"><span class="bad">outline-deafult</span><br><span class="bad">nuetrals/white</span><br>text/header<br>brand/blue</div>
+        </div>
+        <div class="findmain">
+          Variables on this frame include <span class="quote">outline-deafult</span> and <span class="quote">nuetrals/white</span> — they flow straight into generated CSS and are painful to rename later.
+          <div class="row"><div class="k">Fix</div><div class="v">Correct to <span class="quote">outline-default</span> / <span class="quote">neutrals/white</span> in the library before the refresh propagates.</div></div>
+          <div class="row"><div class="k">Layer</div><div class="v"><a href="https://figma.com/design/AbC123/Home?node-id=529-14090">Open in Figma ↗</a> · <code>529:14090</code></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="find">
+      <div class="head"><span class="id">D2</span><span class="title">Money-owed hero is a deliberate divergence — keep it</span><span class="sev s-low">LOW</span></div>
+      <div class="body">
+        <div class="crop"><div class="clabel">Element · D2</div>
+          <div class="m-hero"><div class="l">You're owed</div><div class="a">$3,892</div><div style="font-size:8px;opacity:.9">7 open · 2 overdue</div></div>
+        </div>
+        <div class="findmain">
+          Most field-service homes lead with the schedule; this leads with a <span class="quote">You're owed $3,892</span> hero.
+          <div class="row"><div class="k">Note</div><div class="v"><span class="diff">Differentiator</span> Money-first is the consumer-fintech move (Afterpay, Revolut) and a defensible edge for an owner audience — protect it, don't normalize it away.</div></div>
+          <div class="row"><div class="k">Layer</div><div class="v"><a href="https://figma.com/design/AbC123/Home?node-id=529-14078">Open in Figma ↗</a> · <code>529:14078</code></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Pre-review blockers — placeholder data</h2>
+    <div class="find">
+      <div class="head"><span class="id">P1–P3</span><span class="title">Dummy content that will distract stakeholders</span><span class="sev s-info">FIX BEFORE SHARE</span></div>
+      <div class="body">
+        <div class="crop"><div class="clabel">Pending invoices</div>
+          <div class="m-inv">Sam Altman<span class="r">$232.23</span></div>
+          <div class="m-inv">Sam Altman<span class="r">$232.23</span></div>
+          <div class="m-inv">Sam Altman<span class="r">$232.23</span></div>
+        </div>
+        <div class="findmain">
+          Every invoice row reads <span class="quote">Sam Altman · Apr 22</span>; the leaderboard lists <span class="quote">Arlene</span> twice; badges carry trailing whitespace. Not design flaws — but reviewers fixate on them. Swap in varied, realistic data first.
+          <div class="row"><div class="k">Layer</div><div class="v"><a href="https://figma.com/design/AbC123/Home?node-id=575-4842">Open in Figma ↗</a> · <code>575:4842</code></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Accessibility (WCAG 2.1 AA — computed)</h2>
+    <div class="find">
+      <div class="head"><span class="id">A1</span><span class="title">Disabled/meta grey fails AA for normal text</span><span class="sev s-med">MEDIUM</span></div>
+      <div class="body">
+        <div class="crop"><div class="clabel">Contrast · A1</div>
+          <div style="background:#fff;border:1px solid var(--line);border-radius:5px;padding:8px;text-align:center"><span style="color:#798087;font-size:11px;font-weight:600">Apr 22, 2026</span></div>
+          <div style="font-size:9px;color:var(--sub);margin-top:6px">#798087 on #fff</div>
+        </div>
+        <div class="findmain">
+          Computed from your tokens: <span class="ratio">#798087 on #fff = 4.0:1</span> — <b>fails</b> AA for normal text (needs 4.5:1); passes for large/UI only. The overdue-red <span class="ratio">#b50012 on #ffe8ea = 6.05:1</span> is fine.
+          <div class="row"><div class="k">Fix</div><div class="v">Darken the meta/disabled grey to ≥ <span class="quote">#767676</span> (4.54:1 on white) or reserve <span class="quote">#798087</span> for large text only.</div></div>
+          <div class="row"><div class="k">Layer</div><div class="v"><a href="https://figma.com/design/AbC123/Home?node-id=575-4820">Open in Figma ↗</a> · <code>575:4820</code></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ BENCHMARK GRID ============ -->
+  <section>
+    <h2>Benchmark — real apps</h2>
+    <div class="oknote">✓ Pulled live from Mobbin — real shipped screens, including your direct competitor Jobber. Each card notes what to borrow and which finding it backs. <em>(Placeholders shown in this sample.)</em></div>
+    <div class="refgrid">
+      <div class="ref"><div class="ph" style="background:linear-gradient(135deg,#0b5fc0,#1069cf)">Jobber</div>
+        <div class="rb"><div class="app">Jobber <a href="https://mobbin.com/apps/jobber">View ↗</a></div>
+          <div class="pat">“Business health” groups Quotes / Jobs / Invoices, each with a trend pill.</div>
+          <div class="supports"><b>Backs:</b> business-overview layout · note Jobber labels the tab “Schedule”, not “Jobs” (counter-evidence)</div></div></div>
+      <div class="ref"><div class="ph" style="background:linear-gradient(135deg,#635bff,#8a7bff)">Deel</div>
+        <div class="rb"><div class="app">Deel <a href="https://mobbin.com/apps/deel">View ↗</a></div>
+          <div class="pat">“Upcoming actions” card whose buttons read <b>Pay</b> / <b>Review</b> — constructive, never “Ignore”.</div>
+          <div class="supports"><b>Backs:</b> C1 (verb choice on the disputes card)</div></div></div>
+      <div class="ref"><div class="ph" style="background:linear-gradient(135deg,#ff5a5f,#ff8a5b)">Afterpay</div>
+        <div class="rb"><div class="app">Afterpay <a href="https://mobbin.com/apps/afterpay">View ↗</a></div>
+          <div class="pat">“Total owed $38.28” as a big-number hero with one primary action.</div>
+          <div class="supports"><b>Backs:</b> D2 (money-owed hero — the differentiator)</div></div></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Prevalence — what the design already matches</h2>
+    <table class="prev">
+      <thead><tr><th>Pattern in your design</th><th>Apps that do it</th><th>Prevalence</th></tr></thead>
+      <tbody>
+        <tr><td>Bottom tab bar (5 tabs)</td><td>Jobber, Housecall Pro, Square, most SMB apps</td><td><span class="prevtag u">universal</span></td></tr>
+        <tr><td>“Needs attention” stack on home</td><td>Amazon, Deel, Remote</td><td><span class="prevtag c">common</span></td></tr>
+        <tr><td>Money-owed hero as the first module</td><td>Afterpay, Revolut (rare in field-service)</td><td><span class="prevtag r">rare</span></td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section>
+    <h2>Prioritized next steps</h2>
+    <ol class="rec">
+      <li>Swap placeholder data for realistic content before any stakeholder review (P1–P3).</li>
+      <li>Reword <b>“Ignore”</b> → “Dismiss / Not now” on the disputes card (C1).</li>
+      <li>Correct the misspelled tokens in the library — <b>deafult / nuetrals</b> (D1).</li>
+      <li>Align the shortcut verb — <b>“Collect payment”</b> (C2) — and keep the money-owed hero (D2).</li>
+    </ol>
+  </section>
+
+  <section>
+    <h2>Recommended follow-ups</h2>
+    <div class="followups">
+      For deeper passes this review only samples, hand off to the sibling skills:
+      <ul>
+        <li><code>design:ux-copy</code> — a full voice/tone pass; C1/C2 are the worst offenders, but the greeting, promos, and empty states want a consistent voice.</li>
+        <li><code>design:accessibility-review</code> — a complete WCAG audit; this pass computed contrast only (A1) — focus order, targets, and dynamic type still need checking.</li>
+        <li><code>design:design-system</code> — token consolidation; the misspelled and duplicate values (D1) suggest a library cleanup is due.</li>
+      </ul>
+    </div>
+  </section>
+
+  <div class="foot">
+    Illustrative sample generated by <b>ux-proofsheet</b>. The design mock and per-finding crops stand in for Figma <code>get_screenshot()</code> output; a real report embeds actual screenshots (via <code>scripts/embed_images.py</code>) and “Open in Figma” deep-links to each layer. Content is fictional; app names are real public products used as benchmark references. Scores anchored in the findings above.
+  </div>
+
+</div>
+</body>
+</html>

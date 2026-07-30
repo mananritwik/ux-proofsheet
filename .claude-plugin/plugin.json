@@ -1,0 +1,24 @@
+{
+  "name": "ux-proofsheet",
+  "version": "1.1.0",
+  "description": "Benchmark a UI/UX design against real competitor screenshots. Reads a Figma design, pulls real competitor screens from Mobbin, and produces a scored, evidence-backed HTML review.",
+  "author": {
+    "name": "Ritwik Manan"
+  },
+  "license": "MIT",
+  "keywords": [
+    "design",
+    "ux",
+    "ui",
+    "figma",
+    "mobbin",
+    "competitive-analysis",
+    "design-review",
+    "benchmark",
+    "claude-skills",
+    "agent-skills"
+  ],
+  "skills": [
+    "./skills/ux-proofsheet"
+  ]
+}

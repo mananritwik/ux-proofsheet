@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{{TITLE}} — ux-proofsheet</title>
+<!--
+  ux-proofsheet report template.
+  HOW TO USE:
+  1. Replace the CSS variables in :root with tokens EXTRACTED from the reviewed
+     Figma file so the report looks on-brand. The values below are neutral defaults.
+  2. Fill every {{PLACEHOLDER}} and duplicate the repeating blocks (findings,
+     benchmark cards) as needed.
+  3. RENDER DURABLY — recreate, don't hotlink. Figma/Mobbin screenshot URLs are
+     short-lived and expire (a saved file goes blank). Prefer to REPLACE the
+     {{...IMG}} <img> slots with a faithful HTML/CSS recreation of the screen or
+     element, built from the tokens above — self-contained and permanent. Keep the
+     permanent mobbin.com/screens/ link as the citation. Only embed a real
+     screenshot (run scripts/embed_images.py to base64-inline it) when the runtime
+     has network egress to the image hosts, at capture time.
+-->
+<style>
+  :root{
+    /* SWAP THESE for tokens extracted from the reviewed file */
+    --ink:#101418; --sub:#5b6570; --line:#e6e9ed; --bg:#f6f7f9; --card:#fff;
+    --brand:#1069cf; --brandbg:#e8f3ff;
+    --high:#b50012; --highbg:#ffe8ea;
+    --med:#9a6700;  --medbg:#fff4d6;
+    --low:#0a7d3c;  --lowbg:#e6f7ec;
+    --info:#5a00b5; --infobg:#f3e8ff;
+    --radius:12px;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);line-height:1.5;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1080px;margin:0 auto;padding:32px 24px 80px}
+  header.top{border-bottom:1px solid var(--line);padding-bottom:20px;margin-bottom:24px}
+  .eyebrow{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--sub);font-weight:700}
+  h1{font-size:28px;margin:6px 0 8px;letter-spacing:-.01em}
+  .meta{font-size:13px;color:var(--sub)} .meta a{color:var(--brand);text-decoration:none}
+
+  /* ---------- scorecard (the benchmark) ---------- */
+  .scorecard{display:grid;grid-template-columns:1.1fr 2fr;gap:18px;background:var(--card);
+    border:1px solid var(--line);border-radius:var(--radius);padding:20px;margin:18px 0 28px}
+  .verdict{font-size:15px}.verdict b{color:var(--ink)}
+  .position{margin-top:10px;font-size:13px;color:var(--sub)}
+  .position .badge{display:inline-block;font-weight:700;border-radius:999px;padding:2px 10px;font-size:12px;background:var(--brandbg);color:var(--brand)}
+  .dims{display:grid;grid-template-columns:1fr 1fr;gap:8px 20px;align-self:center}
+  .dim{display:flex;align-items:center;gap:10px;font-size:13px}
+  .dim .name{flex:1;color:var(--sub)}
+  .bar{flex:0 0 90px;height:7px;border-radius:999px;background:var(--line);overflow:hidden}
+  .bar i{display:block;height:100%;background:var(--brand);border-radius:999px}
+  .dim .n{font-weight:700;width:34px;text-align:right}
+  .tally{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+  .pill{font-size:12px;font-weight:700;padding:5px 11px;border-radius:999px;display:inline-flex;gap:6px;align-items:center}
+  .pill .dot{width:8px;height:8px;border-radius:50%}
+  .p-high{background:var(--highbg);color:var(--high)} .p-high .dot{background:var(--high)}
+  .p-med{background:var(--medbg);color:var(--med)} .p-med .dot{background:var(--med)}
+  .p-low{background:var(--lowbg);color:var(--low)} .p-low .dot{background:var(--low)}
+  .p-info{background:var(--infobg);color:var(--info)} .p-info .dot{background:var(--info)}
+
+  section{margin-bottom:34px}
+  h2{font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:var(--sub);
+     border-bottom:1px solid var(--line);padding-bottom:8px;margin:0 0 18px}
+
+  /* ---------- old -> new ---------- */
+  .compare{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+  .shot{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}
+  .shot .cap{display:flex;justify-content:space-between;padding:10px 14px;border-bottom:1px solid var(--line);font-size:13px;font-weight:600}
+  .shot .cap span{font-weight:400;color:var(--sub)}
+  .shot img{display:block;width:100%;background:#eef1f4}
+  .designshot{max-width:420px}      /* a phone screen; widen or remove for web screens */
+  .find .body.withcrop{display:flex;gap:14px;align-items:flex-start}
+  .crop{flex:0 0 132px;width:132px;border:1px solid var(--line);border-radius:8px;background:#eef1f4;display:block}
+  .findmain{flex:1;min-width:0}
+  .find .row .v code{font:600 12px ui-monospace,SFMono-Regular,Menlo,monospace;color:var(--sub)}
+  .find .row .v a{color:var(--brand);text-decoration:none;font-weight:600}
+  @media(max-width:560px){.find .body.withcrop{flex-direction:column}.crop{width:100%;flex-basis:auto}}
+
+  /* ---------- findings ---------- */
+  .find{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);margin-bottom:14px;overflow:hidden}
+  .find .head{display:flex;gap:12px;align-items:flex-start;padding:14px 16px 10px}
+  .find .id{font:600 12px ui-monospace,SFMono-Regular,Menlo,monospace;color:var(--sub);
+            background:var(--bg);border:1px solid var(--line);border-radius:6px;padding:2px 7px;white-space:nowrap}
+  .find .title{font-weight:600;font-size:15px;flex:1}
+  .find .body{padding:0 16px 14px;font-size:14px;color:#2b333b}
+  .find .row{display:flex;gap:8px;margin-top:8px}
+  .find .row .k{flex:0 0 96px;color:var(--sub);font-size:12.5px;font-weight:600}
+  .quote{font:500 13px ui-monospace,SFMono-Regular,Menlo,monospace;background:var(--bg);
+         border-left:3px solid var(--line);padding:3px 9px;border-radius:0 6px 6px 0;display:inline-block}
+  .sev{font-size:11px;font-weight:700;padding:3px 9px;border-radius:999px;white-space:nowrap}
+  .s-high{background:var(--highbg);color:var(--high)} .s-med{background:var(--medbg);color:var(--med)}
+  .s-low{background:var(--lowbg);color:var(--low)} .s-info{background:var(--infobg);color:var(--info)}
+  .diff{display:inline-block;font-size:11px;font-weight:700;border-radius:999px;padding:2px 8px;background:var(--lowbg);color:var(--low)}
+  .works{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:14px 18px}
+  .works ul{margin:0;padding:0}
+  .works li{list-style:none;margin:7px 0;font-size:14px;padding-left:24px;position:relative}
+  .works li::before{content:"✓";position:absolute;left:0;color:var(--low);font-weight:700}
+  table.prev{width:100%;border-collapse:collapse;font-size:13px;background:var(--card);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}
+  table.prev th,table.prev td{padding:10px 12px;text-align:left;border-bottom:1px solid var(--line)}
+  table.prev th{background:var(--bg);font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:var(--sub)}
+  .prevtag{font-size:11px;font-weight:700;border-radius:999px;padding:2px 9px}
+  .prevtag.u{background:var(--lowbg);color:var(--low)}.prevtag.c{background:var(--brandbg);color:var(--brand)}.prevtag.r{background:var(--medbg);color:var(--med)}
+  .followups{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:14px 18px;font-size:14px}
+  .followups code{font:600 12px ui-monospace,SFMono-Regular,Menlo,monospace;color:var(--brand);background:var(--brandbg);border-radius:4px;padding:1px 5px}
+
+  /* ---------- benchmark grid (the proofsheet) ---------- */
+  .oknote{background:var(--lowbg);border:1px solid #bfe6cc;color:#0a5a2c;border-radius:10px;padding:11px 16px;font-size:13px;margin-bottom:18px}
+  .refgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  .ref{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;display:flex;flex-direction:column}
+  .ref img{display:block;width:100%;height:200px;object-fit:cover;object-position:top;background:#eef1f4;border-bottom:1px solid var(--line)}
+  .ref .rb{padding:12px 14px;display:flex;flex-direction:column;gap:6px;flex:1}
+  .ref .app{font-weight:700;font-size:14px;display:flex;justify-content:space-between;align-items:center}
+  .ref .app a{font-weight:500;font-size:12px;color:var(--brand);text-decoration:none}
+  .ref .pat{font-size:13px;color:#2b333b}
+  .ref .supports{margin-top:auto;font-size:11.5px;color:var(--sub)} .ref .supports b{color:var(--med)}
+
+  /* ---------- next steps ---------- */
+  ol.rec{counter-reset:r;list-style:none;padding:0;margin:0}
+  ol.rec li{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:13px 16px 13px 52px;position:relative;margin-bottom:10px;font-size:14px}
+  ol.rec li::before{counter-increment:r;content:counter(r);position:absolute;left:14px;top:12px;
+    width:24px;height:24px;border-radius:50%;background:var(--brand);color:#fff;font-weight:700;font-size:13px;
+    display:flex;align-items:center;justify-content:center}
+  .foot{margin-top:40px;border-top:1px solid var(--line);padding-top:16px;font-size:12px;color:var(--sub)}
+  @media(max-width:720px){.scorecard,.compare,.refgrid{grid-template-columns:1fr}.dims{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="top">
+    <div class="eyebrow">ux-proofsheet · competitive design review</div>
+    <h1>{{TITLE}}</h1>
+    <div class="meta">
+      Source: <a href="{{FIGMA_URL}}">{{FIGMA_LABEL}}</a> ·
+      Competitor set: {{COMPETITOR_SET}} · Generated {{DATE}}
+      <!-- If Mobbin is not connected, add: · Evidence: link-based (Mobbin not connected) -->
+    </div>
+  </header>
+
+  <!-- ============ SCORECARD (the benchmark) ============ -->
+  <div class="scorecard">
+    <div>
+      <div class="verdict"><b>{{ONE_LINE_VERDICT}}</b></div>
+      <div class="position">Competitive position:
+        <span class="badge">{{POSITION}}</span> {{POSITION_DETAIL}}</div>
+      <div class="tally">
+        <span class="pill p-high"><span class="dot"></span>{{N_HIGH}} High</span>
+        <span class="pill p-med"><span class="dot"></span>{{N_MED}} Medium</span>
+        <span class="pill p-low"><span class="dot"></span>{{N_LOW}} Low</span>
+        <span class="pill p-info"><span class="dot"></span>{{N_FIX}} Fix before share</span>
+      </div>
+    </div>
+    <div class="dims">
+      <!-- repeat; width:% = score/5*100 -->
+      <div class="dim"><span class="name">Navigation &amp; IA</span><span class="bar"><i style="width:{{PCT_NAV}}%"></i></span><span class="n">{{SCORE_NAV}}</span></div>
+      <div class="dim"><span class="name">UX copy</span><span class="bar"><i style="width:{{PCT_COPY}}%"></i></span><span class="n">{{SCORE_COPY}}</span></div>
+      <div class="dim"><span class="name">Visual &amp; tokens</span><span class="bar"><i style="width:{{PCT_VIS}}%"></i></span><span class="n">{{SCORE_VIS}}</span></div>
+      <div class="dim"><span class="name">Accessibility</span><span class="bar"><i style="width:{{PCT_A11Y}}%"></i></span><span class="n">{{SCORE_A11Y}}</span></div>
+    </div>
+  </div>
+
+  <!-- ============ THE DESIGN UNDER REVIEW ============ -->
+  <!--
+    ALWAYS show the actual design so the reader can SEE what's being critiqued.
+    Single screen: use the .designshot block. Two states: use the .compare block.
+    Images come from Figma get_screenshot; embed them with embed_images.py.
+  -->
+  <section>
+    <h2>The design under review</h2>
+    <div class="shot designshot"><div class="cap"><span>{{SCREEN_LABEL}}</span><span>{{SCREEN_NOTE}}</span></div><img src="{{DESIGN_IMG}}" alt="design under review"></div>
+
+    <!-- OR, when comparing two states: -->
+    <div class="compare">
+      <div class="shot"><div class="cap"><span>Current</span><span>{{CURRENT_NOTE}}</span></div><img src="{{CURRENT_IMG}}" alt="current"></div>
+      <div class="shot"><div class="cap"><span>Proposed</span><span>{{PROPOSED_NOTE}}</span></div><img src="{{PROPOSED_IMG}}" alt="proposed"></div>
+    </div>
+  </section>
+
+  <!-- ============ WHAT'S WORKING ============ -->
+  <section>
+    <h2>What's working</h2>
+    <div class="works"><ul>
+      <li>{{POSITIVE_1}}</li>
+      <li>{{POSITIVE_2}}</li>
+      <li>{{POSITIVE_3}}</li>
+    </ul></div>
+  </section>
+
+  <!-- ============ FINDINGS BY DIMENSION ============ -->
+  <!-- When reviewing several screens, wrap findings by SCREEN, dimensions nested. -->
+  <section>
+    <h2>{{DIMENSION_NAME}}</h2>
+
+    <!-- repeat this block per finding -->
+    <div class="find">
+      <div class="head">
+        <span class="id">{{ID}}</span>
+        <span class="title">{{FINDING_TITLE}}</span>
+        <span class="sev s-high">HIGH</span><!-- s-high | s-med | s-low | s-info -->
+      </div>
+      <div class="body withcrop">
+        <!-- cropped screenshot of the exact element, from get_screenshot(nodeId) -->
+        <img class="crop" src="{{ELEMENT_CROP_IMG}}" alt="{{ID}} element">
+        <div class="findmain">
+          {{WHAT_AND_WHY}} <span class="quote">{{EXACT_STRING}}</span>
+          <div class="row"><div class="k">Fix</div><div class="v">{{FIX}}</div></div>
+          <div class="row"><div class="k">Backs</div><div class="v">{{WHICH_COMPETITORS}}</div></div>
+          <!-- clickable deep link to the exact layer: file URL + ?node-id=<hyphenated> -->
+          <div class="row"><div class="k">Layer</div><div class="v"><a href="{{FIGMA_NODE_URL}}">Open in Figma ↗</a> · <code>{{NODE_ID}}</code></div></div>
+          <!-- optional for a deliberate divergence: -->
+          <div class="row"><div class="k">Note</div><div class="v"><span class="diff">Differentiator</span> {{WHY_ITS_A_STRENGTH}}</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ BENCHMARK GRID (the proofsheet) ============ -->
+  <section>
+    <h2>Benchmark — real apps</h2>
+    <div class="oknote">✓ Pulled live from Mobbin — real shipped screens. Each card notes what to borrow and which finding it backs.
+      <!-- fallback header: "Link-based (Mobbin not connected) — sources cited below." --></div>
+    <div class="refgrid">
+      <!-- repeat per competitor screen -->
+      <div class="ref">
+        <img src="{{SCREENSHOT_URL}}" alt="{{APP}}">
+        <div class="rb">
+          <div class="app">{{APP}} <a href="{{MOBBIN_URL}}">View ↗</a></div>
+          <div class="pat">{{PATTERN_DESCRIPTION}}</div>
+          <div class="supports"><b>Backs:</b> {{WHICH_FINDING}}</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PREVALENCE CHECK (what you already match) ============ -->
+  <section>
+    <h2>Prevalence — what the design already matches</h2>
+    <table class="prev">
+      <thead><tr><th>Pattern in your design</th><th>Apps that do it</th><th>Prevalence</th></tr></thead>
+      <tbody>
+        <!-- repeat per pattern; prevtag u=universal c=common r=rare -->
+        <tr><td>{{PATTERN}}</td><td>{{APPS}}</td><td><span class="prevtag u">universal</span></td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- ============ PRIORITIZED NEXT STEPS ============ -->
+  <section>
+    <h2>Prioritized next steps</h2>
+    <ol class="rec">
+      <li>{{STEP_1}}</li>
+      <li>{{STEP_2}}</li>
+      <li>{{STEP_3}}</li>
+    </ol>
+  </section>
+
+  <!-- ============ RECOMMENDED FOLLOW-UPS (hand off deep passes) ============ -->
+  <section>
+    <h2>Recommended follow-ups</h2>
+    <div class="followups">
+      For deeper passes this review only samples, hand off to the sibling skills:
+      <ul>
+        <li><code>design:ux-copy</code> — {{WHY_UX_COPY}}</li>
+        <li><code>design:accessibility-review</code> — {{WHY_A11Y}}</li>
+        <li><code>design:design-system</code> — {{WHY_DESIGN_SYSTEM}}</li>
+      </ul>
+    </div>
+  </section>
+
+  <div class="foot">
+    {{METHODOLOGY_AND_LIMITS}}
+    Built on tokens extracted from the reviewed file. Scores anchored in the findings above; condensed for review, not pixel-final.
+    Competitor thumbnails embedded for durability; permanent Mobbin links cited for exploration.
+  </div>
+
+</div>
+</body>
+</html>

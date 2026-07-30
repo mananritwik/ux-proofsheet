@@ -1,0 +1,25 @@
+{
+  "skill_name": "ux-proofsheet",
+  "note": "Triggering eval. should_trigger=true means ux-proofsheet should be the skill consulted. Negatives are near-misses that should route to a sibling skill instead.",
+  "queries": [
+    {"id": 1, "should_trigger": true, "intended": "ux-proofsheet", "query": "here's our onboarding flow in figma https://figma.com/design/xx/On?node-id=3-4 — how does it stack up against how Duolingo and other apps do onboarding?"},
+    {"id": 2, "should_trigger": true, "intended": "ux-proofsheet", "query": "can you benchmark my pricing page against other SaaS competitors? it's just a screenshot i can paste"},
+    {"id": 3, "should_trigger": true, "intended": "ux-proofsheet", "query": "review my app's home screen vs Jobber and Housecall Pro — figma link coming"},
+    {"id": 4, "should_trigger": true, "intended": "ux-proofsheet", "query": "is a bottom sheet the conventional way to do a team/workspace switcher, or am i doing something weird? here's my design"},
+    {"id": 5, "should_trigger": true, "intended": "ux-proofsheet", "query": "find examples of how other fintech apps show 'money owed' on the home screen so i can compare mine"},
+    {"id": 6, "should_trigger": true, "intended": "ux-proofsheet", "query": "compare my wireframe for the checkout to similar e-commerce products"},
+    {"id": 7, "should_trigger": true, "intended": "ux-proofsheet", "query": "what's the industry standard for empty states in a to-do app, and does my design match it?"},
+    {"id": 8, "should_trigger": true, "intended": "ux-proofsheet", "query": "competitive design review of these 3 screens please (home, menu, profile) — figma attached"},
+    {"id": 9, "should_trigger": true, "intended": "ux-proofsheet", "query": "how do other products handle a paywall / upgrade screen? i want to see mine held up against them"},
+
+    {"id": 10, "should_trigger": false, "intended": "design:ux-copy", "query": "what should this button say — 'Delete' or 'Remove account'? it's a destructive action"},
+    {"id": 11, "should_trigger": false, "intended": "design:accessibility-review", "query": "run a WCAG 2.1 AA accessibility audit on this checkout screen — contrast, focus order, targets"},
+    {"id": 12, "should_trigger": false, "intended": "design:design-system", "query": "audit our design system for hardcoded color values and naming inconsistencies across components"},
+    {"id": 13, "should_trigger": false, "intended": "design:design-critique", "query": "review this mockup and tell me what you think of the visual hierarchy — no need to compare to anyone"},
+    {"id": 14, "should_trigger": false, "intended": "none/generation", "query": "design me a fresh, modern login screen for my app from scratch"},
+    {"id": 15, "should_trigger": false, "intended": "design:user-research", "query": "help me write an interview guide and screener for user research on our checkout flow"},
+    {"id": 16, "should_trigger": false, "intended": "design:design-handoff", "query": "generate a dev handoff spec with tokens, breakpoints, and interaction states for this frame"},
+    {"id": 17, "should_trigger": false, "intended": "dataviz", "query": "make a chart showing our weekly signups for the last quarter"},
+    {"id": 18, "should_trigger": false, "intended": "design:research-synthesis", "query": "synthesize these 12 user interview transcripts into themes and recommendations"}
+  ]
+}

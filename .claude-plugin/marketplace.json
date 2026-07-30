@@ -1,0 +1,13 @@
+{
+  "name": "ux-proofsheet",
+  "owner": {
+    "name": "Ritwik Manan"
+  },
+  "plugins": [
+    {
+      "name": "ux-proofsheet",
+      "source": "./",
+      "description": "Benchmark a UI/UX design against real competitor screenshots. Reads Figma, pulls real competitor screens from Mobbin, and produces a scored, evidence-backed HTML review."
+    }
+  ]
+}

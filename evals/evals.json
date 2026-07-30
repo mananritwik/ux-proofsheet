@@ -1,0 +1,35 @@
+{
+  "skill_name": "ux-proofsheet",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Here's my Figma for our field-service app's home screen redesign: https://figma.com/design/AbC123/Home?node-id=529-14078 . We compete with Jobber and Housecall Pro. Can you review it against how they actually do it?",
+      "expected_output": "A scored HTML report: competitive-position scorecard, findings by dimension each tied to a node ID, a Mobbin benchmark grid including Jobber, and prioritized next steps.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "how do other fintech apps handle a 'money owed' summary card on the home screen? i'm designing one and want to know if my approach is conventional",
+      "expected_output": "Mobbin searches for money-owed / balance summary patterns across fintech apps, a proofsheet of real examples, and a read on whether the user's approach is conventional vs novel. Should ask for or infer the design if none provided.",
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "review my pricing page design against SaaS competitors — it's a screenshot, i don't have Figma connected",
+      "expected_output": "Uses search_sections (web) for pricing pages, critiques from the screenshot, notes it can't cite node IDs or extract tokens, still produces an evidence-backed benchmark.",
+      "files": []
+    },
+    {
+      "id": 4,
+      "prompt": "benchmark this onboarding flow against best-in-class B2B SaaS onboarding: https://figma.com/design/XyZ/Onboarding?node-id=12-3",
+      "expected_output": "Uses search_flows for multi-step onboarding, reviews the flow step by step, benchmark grid of real onboarding flows, scorecard.",
+      "files": []
+    },
+    {
+      "id": 5,
+      "prompt": "can you just make me a modern login screen for my app",
+      "expected_output": "Should NOT strongly trigger — this is UI generation, not competitive review. If anything, clarify that ux-proofsheet reviews existing designs against the market rather than generating new UI.",
+      "files": []
+    }
+  ]
+}
