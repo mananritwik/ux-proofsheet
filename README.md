@@ -39,7 +39,7 @@ I lead product and came up through design. The way I stay sharp is hands-on: I u
 
 ## How I know it works
 
-- **Triggering eval.** 18 realistic prompts against the skill next to its sibling design skills; it fired on the competitive-review asks and stayed out of the near-misses. ([`evals/`](evals))
+- **Triggering eval.** 18 realistic prompts against the skill next to its sibling design skills; it fired on the competitive-review asks and stayed out of the near-misses. Reproduce it live: `python evals/run_trigger_evals.py`. ([`evals/`](evals))
 - **A real run.** Pointed at an actual design refresh, which surfaced real problems in the skill (fragile image handling, scope on large boards); fixed, and written up.
 
 ## Requirements
@@ -64,7 +64,7 @@ Or drop `skills/ux-proofsheet/` into your skills directory, or upload the packag
 
 ## Roadmap
 
-Small, paced to real use: a quantified design-token layer next, then a companion that turns a review into a starter design spec. Ship a sharp small thing, improve it in public.
+Small, paced to real use. Near-term steps are tracked in [`ROADMAP.md`](ROADMAP.md); the larger arcs are a quantified design-token layer next, then a companion that turns a review into a starter design spec. Ship a sharp small thing, improve it in public.
 
 ## Honest notes
 

@@ -23,6 +23,8 @@ not just recall.
 
 No description changes needed. Query set: `trigger-evals.json`.
 
+**Reproduce it:** `pip install -r requirements.txt && python run_trigger_evals.py` (runs the judges live against the API; set `JUDGE_MODEL` to pick the model, `--judges N` for the panel size). Exits non-zero if any query mis-routes, so it doubles as a CI gate.
+
 ## 2. Instruction-followability dry-run
 
 A fresh agent read the SKILL.md + references and simulated a run on a **text-only**

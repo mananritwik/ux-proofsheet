@@ -1,0 +1,3 @@
+# For run_trigger_evals.py (the reproducible triggering eval).
+# The skill itself has no Python dependencies; this is only for running the eval.
+anthropic>=0.40
