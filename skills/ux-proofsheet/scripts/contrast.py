@@ -83,11 +83,16 @@ def main():
     results = []
     if args.pairs:
         with open(args.pairs, encoding="utf-8") as f:
-            for line in f:
-                line = line.split("#", 1)[0].strip() if not line.strip().startswith("#") else ""
-                if not line:
+            for raw in f:
+                line = raw.strip()
+                # Full-line comments only — hex colors also start with '#'.
+                if not line or (line.startswith("#") and not (
+                    len(line) >= 4 and all(c in "0123456789abcdefABCDEF" for c in line[1:4])
+                )):
                     continue
                 parts = line.split()
+                if len(parts) < 2:
+                    continue
                 fg, bg = parts[0], parts[1]
                 label = " ".join(parts[2:]) or None
                 results.append(assess(fg, bg, label))

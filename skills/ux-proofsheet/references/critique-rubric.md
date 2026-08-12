@@ -160,8 +160,9 @@ Name only the ones this particular design would actually benefit from.
 
 Each finding in the report should carry:
 
-- **A cropped screenshot of the element** — `get_screenshot(nodeId)` on the
-  finding's node, so the reader *sees* what's being critiqued, not just a code.
+- **A recreated HTML crop of the element** (from tokens; highlight the element).
+  Study the real Figma screenshot yourself; render the report from the recreation
+  so it never depends on an expiring URL.
 - **ID** — `N1`, `C3`, `D1`… (dimension letter + number) for easy reference.
 - **A clickable "Open in Figma ↗" deep link** — built from the file URL +
   `?node-id=<hyphenated-node-id>`, so the designer jumps straight to the layer. A
@@ -173,4 +174,33 @@ Each finding in the report should carry:
 - **What's wrong + why it matters** — one or two sentences, tied to a heuristic.
 - **Fix** — one concrete, specific change.
 - **Backs** — which competitor screenshot(s) support the point (bind evidence to
-  claim).
+  claim) with permanent `mobbin_url` links.
+
+## UX copy matrix (required when copy is in scope)
+
+After the UX-copy findings (or inside that section), include a compact table:
+
+| Element / your string | App A | App B | App C | Read |
+|---|---|---|---|---|
+| Disputes secondary CTA: `Ignore` | Deel: `Review` | Klarna: `Not now` | — | Harsh vs constructive |
+
+Quote exact competitor strings you actually pulled. This is the highest-leverage
+artifact for copy — do not skip it on Full mode when there is microcopy to compare.
+
+## Pasteable finding card (for Slack / designer handoff)
+
+For each High/Medium finding, the report (or share summary) should make this
+block easy to copy:
+
+```
+[C1 · HIGH] "Ignore" on a financial-dispute alert is harsh
+Fix: Use "Dismiss" or "Not now"
+Figma: https://figma.com/design/…?node-id=575-4638
+Backs: Deel (Pay/Review) · https://mobbin.com/screens/…
+```
+
+## Share summary (end of report)
+
+A short block the user can paste into Slack/Notion: one-line verdict, competitive
+position badge, High + Medium tally with IDs only, and the top 3 next steps.
+Omit Low / Fix-before-share noise here.

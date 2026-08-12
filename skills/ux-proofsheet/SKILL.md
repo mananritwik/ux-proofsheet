@@ -9,350 +9,150 @@ description: >-
   Use whenever the user wants design feedback grounded in real competitor
   examples, or says things like "how do others handle this?", "review my design vs
   competitors", "compare my wireframe to similar products", "find examples of how
-  [app] does X", "is this pattern conventional or novel?", "benchmark my UX", or
-  "competitive design review", or shares a Figma link about UX quality or patterns.
-  Works for iOS, web app, and web marketing screens. Not for pure visual/brand
-  critique with no competitive angle, accessibility-only audits, or generating new
-  UI — this evaluates an existing design against the market.
+  [app] does X", "is this pattern conventional or novel?", "benchmark my UX",
+  "competitive design review", "quick proofsheet", or shares a Figma link about UX
+  quality or patterns. Works for iOS, web app, and web marketing screens. Not for
+  pure visual/brand critique with no competitive angle, accessibility-only audits,
+  or generating new UI — this evaluates an existing design against the market.
 ---
 
 # ux-proofsheet
 
-Turn a design into a **proofsheet**: your screen held up against a grid of real
-competitor screens, with a scored critique that says what's working, what to
-fix, and what the market does differently — every claim backed by a real
-screenshot or a cited source.
+Turn a design into a **proofsheet**: scored critique + competitor evidence.
+Output a self-contained **HTML report**. This is a UX/pattern benchmark, not a
+pixel diff — recreate UI from tokens; cite permanent Mobbin + Figma links for
+real pixels. **First-pass** for judgment; junior guidance / senior pressure-test.
+**UX copy is a high-value axis** — always include a copy matrix when copy is in scope.
 
-The output is an **HTML report** (a self-contained artifact), because the value
-is visual and the user will want to keep, share, and revisit it.
+Paste-ready prompts: `references/prompt-cookbook.md`.
 
-**What this is — and isn't.** ux-proofsheet is a **UX / pattern benchmark, not a
-pixel-perfect comparison.** It evaluates structure, hierarchy, flows, patterns,
-and copy against how real competitors ship the same thing. The screens in the
-report are clean HTML recreations built from the design's own tokens — faithful to
-the layout, not pixel-exact renders — and every finding links to the exact layer
-in Figma for anyone who wants the real pixels. Optimize for insight about the UX,
-not fidelity of the screenshot.
+## Tools
 
-**What it's for, and who reads it.** This is a **first-pass** benchmark. Its job is
-to compress the research a product leader would otherwise do by hand — signing up
-for apps, screenshotting, cataloguing how others solve a pattern — and to reach the
-apps you *can't* sign up for or that live in other markets. It casts a wide net:
-**same-industry and, on every run, deliberately cross-industry**, at the screen,
-flow, and element level, so you stay current and can challenge your own
-assumptions. The scored judgment is a **starting point for a conversation, not a
-ruling**: a junior designer can take it as guidance, a senior can use it to
-pressure-test taste and stay lock-step with the market, and the reader always
-decides how much to take. Write findings so they work both as a personal digest
-*and* as discussion-ready feedback to a designer. **UX copy is one of the
-highest-value axes here** — comparing real wording across many apps is exactly the
-thing intuition alone can't keep current on.
+- **Figma MCP** — `get_metadata`, `get_design_context`, `get_screenshot`
+- **Mobbin MCP** — `search_screens`, `search_flows`, `search_sections` (primary evidence)
+- **Web search** — fallback when Mobbin is missing; competitor context
 
-## Tools this skill uses
+No design artifact? Ask for a Figma URL, screenshot, or description before proceeding.
 
-- **Figma MCP** (`get_metadata`, `get_design_context`, `get_screenshot`) — read
-  the design being reviewed: structure, node IDs, labels, tokens, and the
-  rendered image.
-- **Mobbin MCP** (`search_screens`, `search_flows`, `search_sections`) — find
-  real competitor screens, flows, and website sections. This is the primary
-  evidence source.
-- **Web search** — the fallback evidence source when Mobbin is unavailable, and
-  a supplement for competitor context (who competes with whom, recent redesigns).
+## Step 0 — Preflight + mode
 
-If neither Figma nor a design artifact is available, ask the user for a Figma
-node URL, a screenshot, or a written description before proceeding.
+**Preflight (full path):** confirm Mobbin can return a search and Figma can
+`get_design_context` / `get_screenshot`. If Mobbin is down, use the degraded path
+(below) — do not silently gut the review.
 
-## Step 0 — Preflight: check what's connected, degrade gracefully
+**Mode** (ask once if unclear; default Full when a Figma board is attached):
 
-Before doing anything, establish which evidence sources you have. **A missing
-Mobbin connection must not silently gut the review** — it changes the evidence
-source, not the rigor.
-
-- **Mobbin connected** → full path. Real screenshots, image-rich benchmark grid.
-- **Mobbin NOT connected** → fallback path. Web-search for real competitor
-  patterns and cite/link them; run the Figma-only token + heuristic pass in full.
-  State plainly in the report header: *"Mobbin not connected — competitor
-  evidence is link-based, not screenshot-based."* The review is still
-  evidence-based; it's just link-rich rather than image-rich. Do not fabricate
-  screenshots or pretend a pattern is universal without a source.
-- **Figma NOT connected / design is a pasted image** → work from the screenshot.
-  You can still critique hierarchy, copy, and pattern choices; you just can't
-  cite node IDs or extract tokens. Say so.
-
-Never invent a `mobbin_url`, a competitor claim, or a token value you didn't
-actually retrieve. Overclaiming is the one thing that destroys this skill's
-credibility.
-
-## Step 1 — Read the design (and its own notes)
-
-If a Figma URL is provided:
-
-1. `get_metadata(fileKey, nodeId)` — get the structure and the **node IDs**. You
-   will cite these on every finding so the designer can click straight to the layer.
-   For a real board this response can be **huge** (hundreds of KB) and overflow
-   context — when it does, it's saved to a file. Don't dump it: parse it with
-   jq/python (or a subagent), pulling the top-level frames + their names/ids and
-   any text-layer annotations. Screen-title and "Old"/"New" group labels live in
-   the node `name`s.
-2. `get_design_context(nodeId, fileKey)` — labels, layout, component hierarchy,
-   and the **design tokens** (colors, type, spacing). Extract the palette and
-   type — you'll **recreate the screens in HTML on these tokens** (see "Rendering
-   the visuals") and audit token hygiene.
-3. `get_screenshot(nodeId, fileKey)` — the rendered image, **for you to read and
-   analyse**. Look at it carefully (never describe a screen from metadata alone) —
-   but render the report from a faithful HTML recreation, not the raw export, since
-   the screenshot URL expires (see "Rendering the visuals"). Screenshot individual
-   finding nodes too when it helps you study the detail.
-
-**Large exploration boards:** a real refresh board can hold dozens of frames
-across many themes. Reviewing all of them exhaustively is rarely useful — pick the
-primary flows/screens (the anchor change, the ones the annotations call out),
-review those well, and **state plainly what you did and didn't cover** rather than
-implying full coverage.
-
-A node ID by itself is not something a reader can see or click to. So for every
-finding, do two things: show the element's cropped screenshot, and turn the node
-into a **clickable Figma deep link** by appending `?node-id=<nodeId>` (hyphenated,
-e.g. `575-4638`) to the file URL — `https://figma.com/design/<fileKey>/<name>?node-id=575-4638`.
-That's what "traceable" actually means: seeable and one click from the layer.
-
-Then build a short inventory of the design's own choices:
-
-- Every distinct section / interaction pattern (nav, hero, list, primary CTA,
-  empty states, etc.).
-- Product category (fintech, field service, productivity, social…) and platform
-  (iOS / web app / web marketing).
-- The user goal for each section.
-- **Every screen provided — cover them all.** If the user shares several screens
-  (home, menu, switcher, profile…), review *all* of them, not just the first.
-  When there are several, organize the report by screen with the dimensions
-  nested inside.
-- **States and variants, not just the happy path.** For each screen note which
-  states exist and should be reviewed — empty, loading, error, first-run /
-  onboarding, and role / permission variants (owner vs member). These are where
-  designs and competitors differ most; a design that nails the full screen but
-  has no empty state is not done. Benchmark the states too (Mobbin has empty
-  states and onboarding flows).
-- **Read any annotations on the canvas.** Designers leave notes in text layers
-  ("popups not ideal for mobile", "TBD"). Extract them and address them directly
-  in the review — answering the team's own open questions is high-value.
-
-If the input is a screenshot or description only, extract the same inventory from
-what you can see.
-
-## Step 2 — Define the comparison set (same-industry AND cross-industry)
-
-Before searching, name **who** you're benchmarking against. Always build the set
-from **both** — the cross-industry half is required on every run, not optional:
-
-- **Direct / same-industry** — same category and audience (the apps the user names
-  plus obvious rivals). This tells you the *local convention*.
-- **Cross-industry / analogous** — the *same pattern done well in a different
-  industry* (e.g. a nav from a travel app, an empty state from a social app, a
-  money-owed hero from consumer fintech for a B2B invoicing tool). A pattern that
-  holds across fintech, travel, and social is a far stronger signal than one that's
-  merely common in your niche, and cross-industry examples break you out of the
-  blind spots a whole industry can share. This is the half a busy product leader
-  rarely has time to gather by hand, so make it count.
-
-If the user hasn't said who they compete with, propose a set (a few direct + a few
-cross-industry) and confirm in one line, or infer it and state the assumption.
-Web search helps for the direct set; Mobbin's breadth is what makes the
-cross-industry sweep cheap.
-
-## Step 3 — Search for real competitor evidence
-
-For each section in your inventory, run **2–3 searches from different angles**.
-Pick the right Mobbin tool for the artifact:
-
-- **Mobile screens** → `search_screens(query, platform="ios"|"web")`
-- **Multi-step flows** (onboarding, checkout, signup) → `search_flows(...)`
-- **Website marketing sections** (pricing, hero, footer, features) →
-  `search_sections(query)` — note: `search_sections` has **no** `platform`
-  parameter (it's web-only). This is the correct tool for marketing pages; do not
-  use `search_screens` for them.
-
-See `references/search-recipes.md` for the query-construction formula and worked
-examples. Key rules: describe **one screen per query** in plain language, name a
-specific app when you want its exact screen, avoid vague style words, and prefer
-several precise searches over one broad one (4–6 results per search is plenty).
-
-**Look at every screenshot before you describe it.** Mobbin returns the image
-inline — read it. If a search is weak, rephrase with more context (category,
-role, specific UI element) or use `exclude_screen_ids` to get fresh results.
-
-Target: enough evidence to cover every section — roughly 10–20 screens across
-6+ different apps, including the user's named direct competitors.
-
-**Fallback (no Mobbin):** web-search for the same patterns, collect real,
-linkable examples (app-teardown sites, competitor sites, published screenshots),
-and cite them. Be honest that these are links, not embedded shots.
-
-## Step 4 — Assign each piece of evidence a tier
-
-Not all evidence is equal. Tag each finding's source so a screenshot-backed claim
-and a spec-backed claim are never conflated. See `references/evidence-tiers.md`
-for the full model. In short:
-
-- **Tier 1 — real competitor artifacts** (Mobbin screens, live products). The
-  authority for "how competitors actually solve this." This is the v1 backbone.
-- **Tier 2 — authoritative systems** (a real design system via Figma; canonical
-  systems like Material / HIG as reference baselines). For the token/visual layer.
-  *(Roadmap — light in v1.)*
-- **Tier 3 — community specs** (DESIGN.md registries). Inspiration only; never
-  cite as "how competitor X does it." *(Roadmap.)*
-
-## When the design poses a choice — answer it
-
-If the design (or the user, or a canvas annotation) raises an **either/or** —
-"dropdown or segmented pills?", "one CTA or two?" — don't just critique; **decide.**
-Show both options briefly, then recommend one, grounded in competitor evidence:
-*"Dropdown on the home card, pills on the full-analytics screen — mirrors Stripe:
-compact on the gateway, full control on the dedicated dashboard."* A review that
-resolves the open question is worth far more than one that lists trade-offs.
-
-## Step 5 — Build the scored HTML report
-
-Produce a self-contained HTML artifact using `assets/report-template.html` as the
-structure and theming it with the tokens you extracted in Step 1. It leads with a
-**scorecard** (that's the "benchmark" — a competitive-position read, not a
-qualitative-only critique) and follows with evidence.
-
-**Degraded-path substitutions — read before building.** The section spec below is
-written for the full Mobbin+Figma path. When a source is missing, substitute *in
-place* and never fabricate the missing artifact:
-
-| Missing source | What it removes | Substitute — never invent |
+| | **Quick** | **Full** |
 |---|---|---|
-| **Figma** (text or screenshot input) | element crops, "Open in Figma" links, node IDs, token audit, computed contrast | Omit the crop and the link; label the finding *source: description* (or *screenshot*). Do **not** invent a node ID. For contrast, do **not** run or fake `contrast.py` — write "contrast not computed — no tokens extractable; likely risk pairs X/Y; re-run with tokens." |
-| **Mobbin** | benchmark screenshots, `mobbin_url` | Use a **cited web link** per card, labelled "link, not embedded — Mobbin not connected." Do **not** invent a `mobbin_url`. |
-| **Text-only input** (no image at all) | the "design under review" screenshot | Reconstruct the layout as a labelled structural list marked "reconstructed from description — no render available." |
+| Scope | 1 screen / 1 pattern | All provided screens + key states |
+| Evidence | 4–6 cards, 3+ apps | ~10–20 screens, 6+ apps |
+| Report | Scorecard, what's working, top findings, thin grid, next steps | All sections below incl. prevalence, copy matrix, share summary |
 
-If you can't source something, say so in the report. Inventing a node ID, a
-`mobbin_url`, or a contrast number is the one unforgivable failure.
+## Step 0b — Degrade gracefully
 
-Required sections, in order:
+| Missing | Behavior |
+|---|---|
+| **Mobbin** | Web-search + cite links. Header: *"Mobbin not connected — competitor evidence is link-based."* Never invent `mobbin_url`. |
+| **Figma** / pasted image | Critique from image; no node IDs / tokens. Say so. No fake contrast. |
+| **Text only** | Reconstruct layout as a labelled structural list. |
 
-1. **Header + scorecard** — one-line verdict (say whether the issues are
-   *structural* or *cosmetic*), a competitive-position score, a per-dimension
-   score row, and a severity tally (High / Medium / Low + "Fix before share").
-   See the rubric for how to score.
-2. **The design under review** — a prominent, faithful **HTML recreation** of the
-   actual screen(s), built from the extracted tokens (see "Rendering the visuals"),
-   so the reader sees what's being critiqued without any expiring image link. Cover
-   **every** screen provided. When there are two states, show **Old → New / current
-   vs proposed** side by
-   side. Handle a pasted raster gracefully ("copy not extractable"). *If the input
-   is a text description with no image, reconstruct the layout as a labelled
-   structural list marked "reconstructed from description — no render available"
-   (per the substitution table).*
-3. **What's working** — a short set of positive callouts naming the *correct*
-   design decisions before the fixes. A review that's all problems is neither
-   balanced nor trustworthy; name the good calls (and protect the differentiators).
-4. **Findings by dimension** — Navigation & IA, UX copy, Visual & tokens,
-   Placeholder data ("Fix before share"), Accessibility. Each finding carries a
-   **recreated HTML mock of the specific element** (built from the tokens; embed a
-   real crop only when egress allows), an ID (`N1`, `C1`…), a
-   clickable **"Open in Figma ↗"** deep link (built from the node ID), a severity
-   badge, the exact quoted string/token, and a concrete Fix. Show the element —
-   don't just name its node. *(No Figma? Omit the crop and link, label the finding
-   "source: description", and never invent a node ID — see the substitution
-   table.)* For the accessibility pass, run `scripts/contrast.py` on the extracted
-   token pairs so contrast findings are **measured** ("`#798087` on `#fff` =
-   4.0:1, fails AA"), not guessed — but if no tokens were extractable, print the
-   "contrast not computed" note rather than running or faking it. Separate
-   *deviation = risk* from *deviation = differentiation* (see rubric).
-5. **Benchmark grid** — the proofsheet. For each competitor: a **recreated mock of
-   the relevant element** for the inline visual (embed the real screenshot only
-   when egress allows), the permanent `mobbin_url` link ("View ↗"), a one-line
-   pattern description, and a **"Backs: [finding]"** tag binding it to a finding.
-   The grid must visibly include **both same-industry and cross-industry**
-   examples, and label each so the reader sees which is which. Surface
-   counter-evidence too (a competitor who disagrees with a proposed change). *(No
-   Mobbin? Use a cited web link per card instead of a `mobbin_url`, labelled "link,
-   not embedded"; never invent a `mobbin_url`.)*
-6. **Prevalence check** — a neutral table of what the design *already* gets right:
-   *pattern | apps that do it | prevalence*. Rate prevalence on **two axes**: how
-   common in the *direct* set, and whether it also holds **cross-industry** —
-   because a pattern that's universal across industries is a far stronger signal
-   than one that's just common in your niche. This is the positive mirror of the
-   fixes and the evidence behind the competitive-position score.
-7. **Prioritized next steps** — a numbered list ordered by impact × effort.
-8. **Recommended follow-ups** — hand off deeper passes to the sibling skills
-   rather than half-doing them: `design:ux-copy` for a full voice/tone pass,
-   `design:accessibility-review` for a complete WCAG audit, `design:design-system`
-   for token consolidation. Name the ones this design would benefit from.
-9. **Footer** — methodology + provenance + limitations. Note which tokens it was
-   built on and that it's condensed, not pixel-final.
+**Never fabricate** a `mobbin_url`, node ID, token, or contrast number.
 
-### Rendering the visuals — recreate, don't screenshot (this is the point)
+## Step 1 — Read the design
 
-Because this is a UX benchmark, not a pixel diff, you **recreate the UI in HTML/CSS
-from the extracted tokens** rather than embedding raster screenshots. Recreation is
-intentional, not a fallback: it's self-contained and permanent, on-brand (your
-tokens), and lets you highlight the exact element a finding is about — which a flat
-screenshot can't. The exact pixels are never lost: every finding links to the layer
-in Figma. (It also sidesteps the fact that Figma/Mobbin screenshot URLs are
-short-lived signed links that expire within minutes and would leave a delivered
-file blank.) **Never hotlink those URLs in the report.**
+1. `get_metadata` — node IDs + structure. Large dumps → save to file and run
+   `scripts/parse_figma_metadata.py` (do not paste the raw tree).
+2. `get_design_context` — labels, hierarchy, **tokens** (for HTML recreations + hygiene).
+3. `get_screenshot` — study the image yourself; report visuals are recreations.
 
-- **The design under review + element crops:** rebuild the screen(s) and the
-  specific elements as HTML from the design tokens. The Figma screenshot you
-  captured is for *you* to read and analyse — render the report from a faithful
-  HTML recreation, not the raw export. Label it "recreated from the frames on the
-  design's tokens." (Highlight the element a finding is about — a recreation can
-  do this; a screenshot can't.)
-- **Competitor screens:** recreate the *relevant element* (the switcher, the
-  dispute buttons, the nav bar) as a small labelled mock for the inline visual, and
-  always cite the permanent `mobbin.com/screens/…` link ("View ↗") so the reader
-  can open the real screen. The screen link never expires; the thumbnail URL does.
-- **Embedding real screenshots is rarely needed.** The recreations plus the Figma
-  and Mobbin links already carry it. If someone specifically wants pixel-exact
-  frames *and* the runtime has network egress, `scripts/embed_images.py` can inline
-  them at capture time — otherwise don't bother, and never hotlink and hope.
+**Large boards:** list candidate frames from the parser, pick primary flows
+(annotations, Old/New, named screens), and **state what you skip**.
 
-Rule: a delivered report must render with **zero dependence on expiring URLs**, and
-point to Figma for anyone who wants exact pixels.
+Inventory: sections/patterns, category, platform, user goals, **every screen
+provided**, states (empty/loading/error/first-run/roles), canvas annotations.
+
+## Step 2 — Mid-run confirm (mandatory)
+
+Before searching, send **one short confirm**:
+
+```
+Scope: [screens/frames] · Mode: Quick|Full
+Direct: [apps] · Cross-industry: [apps]
+Annotations I'll address: […]
+OK to search?
+```
+
+If the user already named competitors and screens tightly, confirm in one line
+and proceed. Always include **both** same-industry and cross-industry.
+
+## Step 3 — Search evidence
+
+2–3 searches per section from different angles. Tool pick: screens / flows /
+`search_sections` (marketing; no platform param). See `references/search-recipes.md`.
+
+**Retry ladder:** add context → narrow element → drop category (cross-industry) →
+`exclude_screen_ids` → disclose weakness (never invent).
+
+**Named-competitor guarantee:** app-name search → pattern search → closest
+analogue + disclose *"X not found — used Y"*. Look at every screenshot before citing.
+
+## Step 4 — Evidence tiers
+
+Tag sources. Tier 1 (Mobbin / live) = pattern authority. Tier 2 (systems) = light
+in v1. See `references/evidence-tiers.md`. Resolve either/or choices with a
+recommendation + evidence (`references/critique-rubric.md`).
+
+## Step 5 — Scored HTML report
+
+Use `assets/report-template.html`. Theme with extracted tokens. **Recreate**
+screens/elements in HTML/CSS — never hotlink expiring Figma/Mobbin image URLs.
+Always pair recreations with permanent **View ↗** (Mobbin) and **Open in Figma ↗**.
+
+### Degraded substitutions (never invent)
+
+| Missing | Substitute |
+|---|---|
+| Figma | No crop/link/node ID; label *source: description*. Contrast: *"not computed — no tokens"*. |
+| Mobbin | Cited web link per card; *"link, not embedded"*. |
+| Text-only | Labelled structural list for "design under review". |
+
+### Sections (Full; Quick = ★ only)
+
+1. ★ **Header + scorecard** — verdict (structural vs cosmetic), position, dimension scores, severity tally. Rubric for scoring.
+2. ★ **Design under review** — HTML recreation of every in-scope screen (Old→New if two states).
+3. ★ **What's working** — protect differentiators.
+4. ★ **Findings by dimension** — Nav & IA, UX copy, Visual & tokens, Placeholder ("Fix before share"), Accessibility. Each: recreated crop, ID, Figma deep link, severity, quoted string, Fix, Backs. Run `scripts/contrast.py` when tokens exist.
+5. **UX copy matrix** — your string vs 3–5 apps (required on Full when copy is in scope). See rubric.
+6. ★ **Benchmark grid** — recreated element mock + permanent `mobbin_url`, same- + cross-industry labels, "Backs: [finding]", counter-evidence.
+7. **Prevalence** — pattern \| apps \| in-industry \| cross-industry.
+8. ★ **Prioritized next steps**
+9. **Share summary** — pasteable Slack/Notion block (verdict, position, High/Med IDs, top 3 steps) + pasteable finding cards for High/Med.
+10. **Follow-ups** — sibling skills + **continue commands**: dig into `N1`, only `[app]`, re-run copy, Quick on `[screen]`.
+11. **Footer** — methodology, tokens used, limits, mode (Quick/Full).
 
 ## Output rules
 
-1. **Scorecard first, evidence always.** Lead with the score; back every claim
-   with a real screenshot (`mobbin_url` cited) or a linked source.
-2. **One search per claim.** Never reference an app you didn't actually pull.
-3. **Show, don't just cite.** Every finding shows a cropped screenshot of the
-   element and links to it via a clickable "Open in Figma ↗" deep link — a bare
-   node ID is neither seeable nor clickable.
-4. **Quote exact strings.** "Good Morning! Ritwik" and `outline-deafult`, not
-   "the greeting" — precise and verifiable.
-5. **Popularity ≠ correctness.** Mobbin shows what's common, not what's best. Call
-   something a "convention" only when a clear majority of the *direct* set does it,
-   and flag shared anti-patterns.
-6. **No fabrication.** No invented URLs, tokens, or competitor claims. State the
-   evidence source and its tier.
-7. **Render durably.** Recreate the UI in HTML from the extracted tokens; never
-   hotlink expiring Figma/Mobbin URLs. Embed real screenshots only when the runtime
-   has egress. A delivered report must not depend on a URL that can expire.
-8. **Balance.** Name what's working, not only what's broken — and protect
-   deliberate differentiators instead of normalizing them toward the market.
-9. **Cover everything provided.** Every screen the user shares, and its states
-   (empty / error / first-run / roles) — not just the happy-path home screen.
-10. **Resolve, don't just weigh.** When there's an either/or, recommend one option
-    with evidence rather than only listing trade-offs.
+1. Scorecard first; every claim backed by a real pull or linked source.
+2. One search per claim — never cite an app you didn't retrieve.
+3. Show recreations + clickable Figma/Mobbin links (not bare IDs).
+4. Quote exact strings/tokens.
+5. Popularity ≠ correctness; convention = majority of **direct** set only.
+6. No fabrication.
+7. Durable HTML — recreate; never hotlink expiring image URLs.
+8. Balance: name what's working; protect differentiators.
+9. Cover every in-scope screen + key states.
+10. Resolve either/ors with a recommendation.
+11. Confirm scope before searching (Step 2).
 
 ## Reference files
 
-- `references/critique-rubric.md` — the dimensions, heuristics, severity levels,
-  the scoring method, and the convention-vs-differentiation framing. Read this
-  before writing findings.
-- `references/evidence-tiers.md` — the tiered source model, provenance rules, and
-  the graceful-degradation behavior.
-- `references/search-recipes.md` — the Mobbin query-construction formula, tool
-  selection (screens vs flows vs sections), parameters, and worked examples.
+- `references/critique-rubric.md` — dimensions, severity, scoring, copy matrix, finding cards
+- `references/evidence-tiers.md` — tiers + degradation
+- `references/search-recipes.md` — queries, retry ladder, named-competitor guarantee
+- `references/prompt-cookbook.md` — paste-ready prompts
 
-## Roadmap (not in v1)
+## Scripts
 
-- **v2 — token layer (Tier 2):** quantified token comparison via Figma + optional
-  designmd.co (`get_full_system`, `generate_css_variables`, `certify_conformance`),
-  provenance-tagged.
-- **v3 — companion generator:** turn a review into a starter DESIGN.md
-  (benchmark → codify → generate).
+- `scripts/contrast.py` — measured WCAG ratios from token pairs
+- `scripts/parse_figma_metadata.py` — triage large `get_metadata` dumps
+- `scripts/embed_images.py` — optional; only if you truly have durable local assets (not the default path)

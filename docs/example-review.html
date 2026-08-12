@@ -6,10 +6,11 @@
 <title>Example review — ux-proofsheet</title>
 <!--
   ILLUSTRATIVE SAMPLE. Self-contained (no external assets) so it renders anywhere,
-  including GitHub Pages. The "design under review" and the per-finding crops are
-  inline mockups standing in for Figma get_screenshot() output; a real report
-  embeds actual screenshots (via scripts/embed_images.py). Content is a fictional
-  field-service app; app names are real public products used as benchmark refs.
+  including GitHub Pages. The "design under review" and per-finding crops are
+  HTML recreations standing in for a live run's token-based recreations. Real
+  pixels live behind permanent Mobbin "View ↗" and Figma "Open in Figma ↗" links
+  — never hotlinked expiring screenshot URLs. Content is a fictional field-service
+  app; app names are real public products used as benchmark refs.
 -->
 <style>
   :root{
@@ -109,6 +110,12 @@
   .prevtag.u{background:var(--lowbg);color:var(--low)}.prevtag.c{background:var(--brandbg);color:var(--brand)}.prevtag.r{background:var(--medbg);color:var(--med)}
   .followups{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:14px 18px;font-size:14px}
   .followups code{font:600 12px ui-monospace,SFMono-Regular,Menlo,monospace;color:var(--brand);background:var(--brandbg);border-radius:4px;padding:1px 5px}
+  .share{background:var(--card);border:1px dashed var(--line);border-radius:var(--radius);padding:14px 18px;font-size:13px;white-space:pre-wrap;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;color:#2b333b;line-height:1.55}
+  .copymatrix{width:100%;border-collapse:collapse;font-size:13px;background:var(--card);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}
+  .copymatrix th,.copymatrix td{padding:10px 12px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
+  .copymatrix th{background:var(--bg);font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:var(--sub)}
+  .copymatrix tr:last-child td{border-bottom:none}
+  .copymatrix code{font:600 12px ui-monospace,Menlo,monospace;background:var(--bg);border-radius:4px;padding:1px 5px}
   .ratio{font:600 12px ui-monospace,Menlo,monospace;background:var(--bg);border-radius:4px;padding:1px 5px}
   /* crop mini-elements */
   .m-btnrow{display:flex;gap:5px;justify-content:flex-end;margin-top:20px}
@@ -189,7 +196,7 @@
         </div>
         <div class="nav"><div class="t on"><span class="i">⌂</span>Home</div><div class="t"><span class="i">⛭</span>Jobs</div><div class="t"><span class="i">≣</span>Estimates</div><div class="t"><span class="i">▤</span>Invoices</div><div class="t"><span class="i">◍</span>Balance</div></div>
       </div></div>
-      <div class="cap"><b>What it is.</b> The proposed home for a field-service app, reordered around money and decisions. Below, each finding shows a crop of the exact element it refers to and links straight to that layer in Figma. <em>(In this sample the crops are inline mockups; a real report embeds actual Figma screenshots.)</em></div>
+      <div class="cap"><b>What it is.</b> The proposed home for a field-service app, reordered around money and decisions. Below, each finding shows a recreated crop of the exact element and links straight to that layer in Figma. <em>(Sample recreations; a live report builds these from the design's tokens. Real pixels: Open in Figma ↗ / Mobbin View ↗.)</em></div>
     </div>
   </section>
 
@@ -311,10 +318,41 @@
     </div>
   </section>
 
+  <!-- ============ UX COPY MATRIX ============ -->
+  <section>
+    <h2>UX copy matrix</h2>
+    <table class="copymatrix">
+      <thead><tr><th>Element / your string</th><th>Deel</th><th>Klarna</th><th>Jobber</th><th>Read</th></tr></thead>
+      <tbody>
+        <tr>
+          <td>Disputes secondary CTA: <code>Ignore</code></td>
+          <td><code>Review</code></td>
+          <td><code>Not now</code></td>
+          <td>—</td>
+          <td>Harsh vs constructive — backs C1</td>
+        </tr>
+        <tr>
+          <td>Shortcut tile: <code>Quick collect</code></td>
+          <td>—</td>
+          <td>—</td>
+          <td><code>Collect payment</code>-style verbs</td>
+          <td>Breaks Create-* parallelism — backs C2</td>
+        </tr>
+        <tr>
+          <td>Hero label: <code>You're owed</code></td>
+          <td>—</td>
+          <td>Afterpay: <code>Total owed</code></td>
+          <td>Schedule-first homes</td>
+          <td>Differentiator to protect — backs D2</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
   <!-- ============ BENCHMARK GRID ============ -->
   <section>
     <h2>Benchmark — real apps</h2>
-    <div class="oknote">✓ Pulled live from Mobbin — real shipped screens, including your direct competitor Jobber. Each card notes what to borrow and which finding it backs. <em>(Placeholders shown in this sample.)</em></div>
+    <div class="oknote">✓ Evidence from Mobbin. Inline visuals are recreations of the relevant element; open <b>View ↗</b> for the real screen. Includes direct competitor Jobber. <em>(Placeholders in this sample.)</em></div>
     <div class="refgrid">
       <div class="ref"><div class="ph" style="background:linear-gradient(135deg,#0b5fc0,#1069cf)">Jobber</div>
         <div class="rb"><div class="app">Jobber <a href="https://mobbin.com/apps/jobber">View ↗</a></div>
@@ -354,19 +392,39 @@
   </section>
 
   <section>
+    <h2>Share summary</h2>
+    <div class="share">Mobile Home — Field Service App
+On par → slightly ahead on hierarchy; behind on copy.
+High: C1, D1 · Medium: C2, A1 (+2) · Top fixes: placeholders → “Ignore”→Dismiss → token typos
+
+---
+[C1 · HIGH] “Ignore” on a financial-dispute alert is harsh
+Fix: Use “Dismiss” or “Not now”
+Figma: https://figma.com/design/AbC123/Home?node-id=575-4638
+Backs: Deel · https://mobbin.com/apps/deel
+
+---
+[D1 · HIGH] Misspelled token names will ship into code
+Fix: outline-default / neutrals/white before refresh propagates
+Figma: https://figma.com/design/AbC123/Home?node-id=529-14090
+Backs: — (token hygiene)</div>
+  </section>
+
+  <section>
     <h2>Recommended follow-ups</h2>
     <div class="followups">
-      For deeper passes this review only samples, hand off to the sibling skills:
+      Sibling skills:
       <ul>
         <li><code>design:ux-copy</code> — a full voice/tone pass; C1/C2 are the worst offenders, but the greeting, promos, and empty states want a consistent voice.</li>
-        <li><code>design:accessibility-review</code> — a complete WCAG audit; this pass computed contrast only (A1) — focus order, targets, and dynamic type still need checking.</li>
-        <li><code>design:design-system</code> — token consolidation; the misspelled and duplicate values (D1) suggest a library cleanup is due.</li>
+        <li><code>design:accessibility-review</code> — a complete WCAG audit; this pass computed contrast only (A1).</li>
+        <li><code>design:design-system</code> — token consolidation; misspelled/duplicate values (D1).</li>
       </ul>
+      Continue in this chat: <code>dig into C1</code> · <code>only Jobber</code> · <code>re-run copy</code> · <code>Quick on empty state</code>
     </div>
   </section>
 
   <div class="foot">
-    Illustrative sample generated by <b>ux-proofsheet</b>. The design mock and per-finding crops stand in for Figma <code>get_screenshot()</code> output; a real report embeds actual screenshots (via <code>scripts/embed_images.py</code>) and “Open in Figma” deep-links to each layer. Content is fictional; app names are real public products used as benchmark references. Scores anchored in the findings above.
+    Illustrative sample generated by <b>ux-proofsheet</b> (Full mode). Design mock and per-finding crops are HTML recreations from design tokens; permanent Mobbin + Figma links carry the real pixels. Content is fictional; app names are real public products used as benchmark references. Scores anchored in the findings above.
   </div>
 
 </div>

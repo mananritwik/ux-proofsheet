@@ -1,0 +1,31 @@
+{
+  "samples": [
+    {
+      "path": "docs/example-review.html",
+      "required_headings": [
+        "The design under review",
+        "What's working",
+        "UX copy",
+        "UX copy matrix",
+        "Benchmark — real apps",
+        "Prevalence — what the design already matches",
+        "Prioritized next steps",
+        "Share summary",
+        "Recommended follow-ups"
+      ],
+      "required_finding_ids": ["C1", "C2", "D1", "D2", "A1"],
+      "required_substrings": [
+        "recreated",
+        "Open in Figma",
+        "View ↗",
+        "dig into C1",
+        "#798087 on #fff = 4.0:1",
+        "#b50012 on #ffe8ea = 6.05:1"
+      ],
+      "contrast_checks": [
+        {"fg": "#798087", "bg": "#ffffff", "expected_ratio": 4.0, "tolerance": 0.15},
+        {"fg": "#b50012", "bg": "#ffe8ea", "expected_ratio": 6.05, "tolerance": 0.2}
+      ]
+    }
+  ]
+}

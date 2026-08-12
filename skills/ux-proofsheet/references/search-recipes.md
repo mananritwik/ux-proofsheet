@@ -75,15 +75,32 @@ leader can't gather by hand. Screens and flows are the primary unit, but you can
 also point a search at a single **element** across the whole database when that's
 what the review needs (e.g. the best nav bars anywhere, regardless of app).
 
-## When results are weak
+## When results are weak — retry ladder (use in order)
 
-- **Irrelevant?** Add context — category, user role, or a specific UI element.
-  `"business owner revenue dashboard mobile"` beats `"dashboard"`.
-- **Can't find a specific app?** Search the *pattern*, not the app. No Housecall
-  Pro? Try `"field service job schedule home screen"` — you'll find equivalents.
-- **Not enough variety?** Use `exclude_screen_ids` to skip screens you've shown.
-- **Always look at the returned image** before describing what an app does — the
-  tools return screenshots inline; read them, don't infer from metadata.
+1. **Add context** — category, role, or a specific UI element.
+   `"business owner revenue dashboard mobile"` beats `"dashboard"`.
+2. **Narrow the element** — search the control, not the whole screen
+   (`"workspace switcher bottom sheet list of teams"`).
+3. **Drop the category word** for cross-industry breadth
+   (`"bottom navigation with a more tab"`).
+4. **exclude_screen_ids** — skip screens you've already used for fresh variety.
+5. **Still weak?** Say so in the report; do not invent a screen or stretch a
+   weak hit into a convention claim.
+
+**Always look at the returned image** before describing what an app does —
+read the screenshot, don't infer from metadata.
+
+## Named-competitor guarantee
+
+When the user names direct competitors (Jobber, Stripe, …), those apps are
+**must-include** on the benchmark grid when Mobbin has them.
+
+1. Search by **app name + screen**: `"Jobber business health metrics home"`.
+2. If empty/weak → search **pattern + category** (no app name).
+3. If still no authentic hit → pick the closest analogue and **disclose**:
+   *"Housecall Pro not found in Mobbin for this pattern — used ServiceTitan as
+   the field-service stand-in."*
+4. Never invent a `mobbin_url` or claim you pulled an app you didn't.
 
 ## Worked examples
 

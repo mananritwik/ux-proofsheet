@@ -11,13 +11,11 @@
      Figma file so the report looks on-brand. The values below are neutral defaults.
   2. Fill every {{PLACEHOLDER}} and duplicate the repeating blocks (findings,
      benchmark cards) as needed.
-  3. RENDER DURABLY — recreate, don't hotlink. Figma/Mobbin screenshot URLs are
-     short-lived and expire (a saved file goes blank). Prefer to REPLACE the
-     {{...IMG}} <img> slots with a faithful HTML/CSS recreation of the screen or
-     element, built from the tokens above — self-contained and permanent. Keep the
-     permanent mobbin.com/screens/ link as the citation. Only embed a real
-     screenshot (run scripts/embed_images.py to base64-inline it) when the runtime
-     has network egress to the image hosts, at capture time.
+  3. RENDER DURABLY — recreate, don't hotlink. Figma/Mobbin screenshot URLs expire.
+     REPLACE every {{...IMG}} <img> slot with a faithful HTML/CSS recreation built
+     from the tokens above. Keep permanent mobbin.com/screens/ and Figma
+     ?node-id= links as the source of truth for real pixels. Do not depend on
+     capture-time embeds.
 -->
 <style>
   :root{
@@ -103,11 +101,18 @@
   .prevtag.u{background:var(--lowbg);color:var(--low)}.prevtag.c{background:var(--brandbg);color:var(--brand)}.prevtag.r{background:var(--medbg);color:var(--med)}
   .followups{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:14px 18px;font-size:14px}
   .followups code{font:600 12px ui-monospace,SFMono-Regular,Menlo,monospace;color:var(--brand);background:var(--brandbg);border-radius:4px;padding:1px 5px}
+  .share{background:var(--card);border:1px dashed var(--line);border-radius:var(--radius);padding:14px 18px;font-size:13px;white-space:pre-wrap;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;color:#2b333b;line-height:1.55}
+  .copymatrix{width:100%;border-collapse:collapse;font-size:13px;background:var(--card);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}
+  .copymatrix th,.copymatrix td{padding:10px 12px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
+  .copymatrix th{background:var(--bg);font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:var(--sub)}
+  .copymatrix tr:last-child td{border-bottom:none}
+  .copymatrix code{font:600 12px ui-monospace,Menlo,monospace;background:var(--bg);border-radius:4px;padding:1px 5px}
 
   /* ---------- benchmark grid (the proofsheet) ---------- */
   .oknote{background:var(--lowbg);border:1px solid #bfe6cc;color:#0a5a2c;border-radius:10px;padding:11px 16px;font-size:13px;margin-bottom:18px}
   .refgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
   .ref{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;display:flex;flex-direction:column}
+  .ref .ph,.ph{min-height:120px;border-bottom:1px solid var(--line);padding:14px;background:var(--bg);font-size:13px;color:#2b333b}
   .ref img{display:block;width:100%;height:200px;object-fit:cover;object-position:top;background:#eef1f4;border-bottom:1px solid var(--line)}
   .ref .rb{padding:12px 14px;display:flex;flex-direction:column;gap:6px;flex:1}
   .ref .app{font-weight:700;font-size:14px;display:flex;justify-content:space-between;align-items:center}
@@ -162,18 +167,14 @@
 
   <!-- ============ THE DESIGN UNDER REVIEW ============ -->
   <!--
-    ALWAYS show the actual design so the reader can SEE what's being critiqued.
-    Single screen: use the .designshot block. Two states: use the .compare block.
-    Images come from Figma get_screenshot; embed them with embed_images.py.
+    Recreate the screen in HTML/CSS from extracted tokens (replace <img> slots).
+    Study Figma screenshots yourself; do not hotlink expiring image URLs.
   -->
   <section>
     <h2>The design under review</h2>
-    <div class="shot designshot"><div class="cap"><span>{{SCREEN_LABEL}}</span><span>{{SCREEN_NOTE}}</span></div><img src="{{DESIGN_IMG}}" alt="design under review"></div>
-
-    <!-- OR, when comparing two states: -->
-    <div class="compare">
-      <div class="shot"><div class="cap"><span>Current</span><span>{{CURRENT_NOTE}}</span></div><img src="{{CURRENT_IMG}}" alt="current"></div>
-      <div class="shot"><div class="cap"><span>Proposed</span><span>{{PROPOSED_NOTE}}</span></div><img src="{{PROPOSED_IMG}}" alt="proposed"></div>
+    <!-- Prefer an inline HTML recreation. Fallback placeholder structure: -->
+    <div class="shot designshot"><div class="cap"><span>{{SCREEN_LABEL}}</span><span>recreated from design tokens</span></div>
+      <!-- {{DESIGN_RECREATION_HTML}} -->
     </div>
   </section>
 
@@ -200,32 +201,47 @@
         <span class="sev s-high">HIGH</span><!-- s-high | s-med | s-low | s-info -->
       </div>
       <div class="body withcrop">
-        <!-- cropped screenshot of the exact element, from get_screenshot(nodeId) -->
-        <img class="crop" src="{{ELEMENT_CROP_IMG}}" alt="{{ID}} element">
+        <!-- HTML recreation of the element (not an expiring screenshot URL) -->
+        <div class="crop">{{ELEMENT_RECREATION_HTML}}</div>
         <div class="findmain">
           {{WHAT_AND_WHY}} <span class="quote">{{EXACT_STRING}}</span>
           <div class="row"><div class="k">Fix</div><div class="v">{{FIX}}</div></div>
-          <div class="row"><div class="k">Backs</div><div class="v">{{WHICH_COMPETITORS}}</div></div>
-          <!-- clickable deep link to the exact layer: file URL + ?node-id=<hyphenated> -->
+          <div class="row"><div class="k">Backs</div><div class="v">{{WHICH_COMPETITORS}} · <a href="{{MOBBIN_URL}}">View ↗</a></div></div>
           <div class="row"><div class="k">Layer</div><div class="v"><a href="{{FIGMA_NODE_URL}}">Open in Figma ↗</a> · <code>{{NODE_ID}}</code></div></div>
-          <!-- optional for a deliberate divergence: -->
           <div class="row"><div class="k">Note</div><div class="v"><span class="diff">Differentiator</span> {{WHY_ITS_A_STRENGTH}}</div></div>
         </div>
       </div>
     </div>
   </section>
 
+  <!-- ============ UX COPY MATRIX ============ -->
+  <section>
+    <h2>UX copy matrix</h2>
+    <table class="copymatrix">
+      <thead><tr><th>Element / your string</th><th>App A</th><th>App B</th><th>App C</th><th>Read</th></tr></thead>
+      <tbody>
+        <tr>
+          <td>{{ELEMENT}}: <code>{{YOUR_STRING}}</code></td>
+          <td>{{APP_A}}: <code>{{STRING_A}}</code></td>
+          <td>{{APP_B}}: <code>{{STRING_B}}</code></td>
+          <td>{{APP_C}}: <code>{{STRING_C}}</code></td>
+          <td>{{READ}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
   <!-- ============ BENCHMARK GRID (the proofsheet) ============ -->
   <section>
     <h2>Benchmark — real apps</h2>
-    <div class="oknote">✓ Pulled live from Mobbin — real shipped screens. Each card notes what to borrow and which finding it backs.
-      <!-- fallback header: "Link-based (Mobbin not connected) — sources cited below." --></div>
+    <div class="oknote">✓ Evidence from Mobbin. Inline visuals are token recreations of the relevant element; open <b>View ↗</b> for the real screen.
+      <!-- fallback: "Link-based (Mobbin not connected) — sources cited below." --></div>
     <div class="refgrid">
-      <!-- repeat per competitor screen -->
       <div class="ref">
-        <img src="{{SCREENSHOT_URL}}" alt="{{APP}}">
+        <!-- replace with small HTML recreation of the relevant element -->
+        <div class="ph">{{ELEMENT_RECREATION}}</div>
         <div class="rb">
-          <div class="app">{{APP}} <a href="{{MOBBIN_URL}}">View ↗</a></div>
+          <div class="app">{{APP}} <span style="font-size:11px;color:var(--sub);font-weight:500">{{SAME_OR_CROSS}}</span> <a href="{{MOBBIN_URL}}">View ↗</a></div>
           <div class="pat">{{PATTERN_DESCRIPTION}}</div>
           <div class="supports"><b>Backs:</b> {{WHICH_FINDING}}</div>
         </div>
@@ -255,23 +271,34 @@
     </ol>
   </section>
 
-  <!-- ============ RECOMMENDED FOLLOW-UPS (hand off deep passes) ============ -->
+  <!-- ============ SHARE SUMMARY (paste into Slack / Notion) ============ -->
+  <section>
+    <h2>Share summary</h2>
+    <div class="share">{{SHARE_SUMMARY_TEXT}}
+---
+[{{ID}} · {{SEVERITY}}] {{FINDING_TITLE}}
+Fix: {{FIX}}
+Figma: {{FIGMA_NODE_URL}}
+Backs: {{APP}} · {{MOBBIN_URL}}</div>
+  </section>
+
+  <!-- ============ RECOMMENDED FOLLOW-UPS ============ -->
   <section>
     <h2>Recommended follow-ups</h2>
     <div class="followups">
-      For deeper passes this review only samples, hand off to the sibling skills:
+      Sibling skills:
       <ul>
         <li><code>design:ux-copy</code> — {{WHY_UX_COPY}}</li>
         <li><code>design:accessibility-review</code> — {{WHY_A11Y}}</li>
         <li><code>design:design-system</code> — {{WHY_DESIGN_SYSTEM}}</li>
       </ul>
+      Continue in this chat: <code>dig into {{ID}}</code> · <code>only {{APP}}</code> · <code>re-run copy</code> · <code>Quick on {{SCREEN}}</code>
     </div>
   </section>
 
   <div class="foot">
     {{METHODOLOGY_AND_LIMITS}}
-    Built on tokens extracted from the reviewed file. Scores anchored in the findings above; condensed for review, not pixel-final.
-    Competitor thumbnails embedded for durability; permanent Mobbin links cited for exploration.
+    Mode: {{MODE}}. Built on tokens from the reviewed file — visuals are HTML recreations; permanent Mobbin + Figma links carry the real pixels. Scores anchored in the findings; condensed, not pixel-final.
   </div>
 
 </div>

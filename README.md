@@ -6,9 +6,7 @@
 
 A Claude [Agent Skill](https://github.com/anthropics/skills). Point it at a design; it pulls real competitor screens for the same patterns and returns a scored, evidence-backed review. A UX benchmark, not a pixel diff.
 
-**[See a sample review →](https://mananritwik.github.io/ux-proofsheet/example-review.html)**  ·  works with the [Mobbin](https://mobbin.com/mcp) and [Figma](https://www.figma.com/blog/design-systems-ai-mcp/) MCPs
-
-<!-- Add a screenshot of the sample here once Pages is live: ![sample](docs/example.png) -->
+**[See a sample review →](https://mananritwik.github.io/ux-proofsheet/example-review.html)**  ·  [gallery](https://mananritwik.github.io/ux-proofsheet/) ·  works with the [Mobbin](https://mobbin.com/mcp) and [Figma](https://www.figma.com/blog/design-systems-ai-mcp/) MCPs
 
 </div>
 
@@ -46,6 +44,15 @@ I lead product and came up through design. The way I stay sharp is hands-on: I u
 
 Best with the [Mobbin](https://mobbin.com/mcp) and [Figma](https://www.figma.com/blog/design-systems-ai-mcp/) MCPs connected. No Mobbin? It falls back to web research for real examples, so you still get evidence, just links instead of screenshots.
 
+### Preflight (Mobbin + Figma)
+
+Before your first real review, confirm both MCPs respond:
+
+1. **Figma** — open a frame URL; the agent can `get_screenshot` / `get_design_context`.
+2. **Mobbin** — a simple `search_screens` (e.g. `"ios home dashboard"`) returns results.
+
+Paste-ready prompts live in [`skills/ux-proofsheet/references/prompt-cookbook.md`](skills/ux-proofsheet/references/prompt-cookbook.md). Ask for **Quick** (one screen, top findings) or **Full** (complete proofsheet).
+
 ## Install
 
 ```
@@ -58,9 +65,9 @@ Or drop `skills/ux-proofsheet/` into your skills directory, or upload the packag
 ## What's in here
 
 - [`skills/ux-proofsheet/SKILL.md`](skills/ux-proofsheet/SKILL.md): the workflow.
-- [`references/`](skills/ux-proofsheet/references): the critique rubric, the evidence model, and the Mobbin search recipes. Useful as a design-review method on their own.
-- [`scripts/`](skills/ux-proofsheet/scripts): a WCAG contrast checker and an image helper.
-- [`evals/`](evals): the triggering set and the results.
+- [`references/`](skills/ux-proofsheet/references): critique rubric, evidence model, Mobbin search recipes, prompt cookbook.
+- [`scripts/`](skills/ux-proofsheet/scripts): WCAG contrast checker, Figma metadata triage, image helper.
+- [`evals/`](evals): triggering set, golden sample check, and results.
 
 ## Roadmap
 
