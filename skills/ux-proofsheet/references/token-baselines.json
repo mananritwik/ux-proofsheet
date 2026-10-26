@@ -1,0 +1,58 @@
+{
+  "_about": "Baseline numbers for scripts/token_check.py. Every value is copied from the official page in its 'source' field (retrieved 2026-10-26). Do not add a value without a source. See token-baselines.md for quotes and caveats.",
+  "material3": {
+    "name": "Material 3",
+    "unit": "dp/sp",
+    "type_source": "https://m3.material.io/styles/typography/type-scale-tokens",
+    "type_ratio": 1.125,
+    "type_ratio_name": "Major Second",
+    "type_base_size": 14,
+    "type_scale": [
+      {"style": "Display Large",   "size": 57, "line_height": 64, "weight": 400},
+      {"style": "Display Medium",  "size": 45, "line_height": 52, "weight": 400},
+      {"style": "Display Small",   "size": 36, "line_height": 44, "weight": 400},
+      {"style": "Headline Large",  "size": 32, "line_height": 40, "weight": 400},
+      {"style": "Headline Medium", "size": 28, "line_height": 36, "weight": 400},
+      {"style": "Headline Small",  "size": 24, "line_height": 32, "weight": 400},
+      {"style": "Title Large",     "size": 22, "line_height": 28, "weight": 400},
+      {"style": "Title Medium",    "size": 16, "line_height": 24, "weight": 500},
+      {"style": "Title Small",     "size": 14, "line_height": 20, "weight": 500},
+      {"style": "Body Large",      "size": 16, "line_height": 24, "weight": 400},
+      {"style": "Body Medium",     "size": 14, "line_height": 20, "weight": 400},
+      {"style": "Body Small",      "size": 12, "line_height": 16, "weight": 400},
+      {"style": "Label Large",     "size": 14, "line_height": 20, "weight": 500},
+      {"style": "Label Medium",    "size": 12, "line_height": 16, "weight": 500},
+      {"style": "Label Small",     "size": 11, "line_height": 16, "weight": 500}
+    ],
+    "spacing": {
+      "grid": 4,
+      "component_grid": 8,
+      "source": "https://m2.material.io/design/layout/spacing-methods.html",
+      "rule": "All components align to an 8dp square baseline grid. Icons, type, and some elements within components can align to a 4dp grid. Padding is measured in increments of 8dp or 4dp.",
+      "note": "Stated on the Material Design spacing-methods page. The current M3 layout pages do not restate the grid, but M3 density guidance still moves padding in 4dp steps (https://m3.material.io/foundations/layout/grids-spacing/density)."
+    }
+  },
+  "hig_ios": {
+    "name": "Apple HIG (iOS, Large default)",
+    "unit": "pt",
+    "type_source": "https://developer.apple.com/design/human-interface-guidelines/typography",
+    "type_ratio": null,
+    "type_ratio_name": null,
+    "type_base_size": null,
+    "type_scale": [
+      {"style": "Large Title", "size": 34, "line_height": 41, "weight": "Regular"},
+      {"style": "Title 1",     "size": 28, "line_height": 34, "weight": "Regular"},
+      {"style": "Title 2",     "size": 22, "line_height": 28, "weight": "Regular"},
+      {"style": "Title 3",     "size": 20, "line_height": 25, "weight": "Regular"},
+      {"style": "Headline",    "size": 17, "line_height": 22, "weight": "Semibold"},
+      {"style": "Body",        "size": 17, "line_height": 22, "weight": "Regular"},
+      {"style": "Callout",     "size": 16, "line_height": 21, "weight": "Regular"},
+      {"style": "Subhead",     "size": 15, "line_height": 20, "weight": "Regular"},
+      {"style": "Footnote",    "size": 13, "line_height": 18, "weight": "Regular"},
+      {"style": "Caption 1",   "size": 12, "line_height": 16, "weight": "Regular"},
+      {"style": "Caption 2",   "size": 11, "line_height": 13, "weight": "Regular"}
+    ],
+    "spacing": null,
+    "spacing_note": "The HIG Layout page (https://developer.apple.com/design/human-interface-guidelines/layout) points to system margins and layout guides but publishes no iOS spacing increment. The common '8pt grid' is a community convention, not an Apple rule, so token_check does not attribute one to the HIG. Spacing is checked against the Material grid only."
+  }
+}

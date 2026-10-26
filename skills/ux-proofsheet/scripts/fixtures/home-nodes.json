@@ -1,0 +1,999 @@
+{
+ "name": "Design Refresh (fixture)",
+ "_fixture": "Hand-written for ux-proofsheet tests. Figma REST/plugin node shape; fictional field-service Home screen matching docs/example-review.html.",
+ "nodes": {
+  "529:14090": {
+   "document": {
+    "id": "529:14090",
+    "name": "Home",
+    "type": "FRAME",
+    "layoutMode": "VERTICAL",
+    "itemSpacing": 0,
+    "paddingTop": 0,
+    "paddingRight": 0,
+    "paddingBottom": 0,
+    "paddingLeft": 0,
+    "children": [
+     {
+      "id": "575:4600",
+      "name": "Header",
+      "type": "FRAME",
+      "layoutMode": "HORIZONTAL",
+      "itemSpacing": 8,
+      "paddingTop": 8,
+      "paddingRight": 12,
+      "paddingBottom": 8,
+      "paddingLeft": 12,
+      "children": [
+       {
+        "id": "575:4700",
+        "name": "Menu",
+        "type": "INSTANCE",
+        "children": []
+       },
+       {
+        "id": "575:4701",
+        "name": "Logo",
+        "type": "RECTANGLE"
+       },
+       {
+        "id": "575:4702",
+        "name": "Team name",
+        "type": "TEXT",
+        "characters": "Locksmiths",
+        "style": {
+         "fontFamily": "SF Pro Text",
+         "fontWeight": 600,
+         "fontSize": 16,
+         "lineHeightPx": 21
+        }
+       },
+       {
+        "id": "575:4703",
+        "name": "Avatar",
+        "type": "ELLIPSE"
+       }
+      ]
+     },
+     {
+      "id": "575:4610",
+      "name": "Content",
+      "type": "FRAME",
+      "layoutMode": "VERTICAL",
+      "itemSpacing": 16,
+      "paddingTop": 12,
+      "paddingRight": 16,
+      "paddingBottom": 16,
+      "paddingLeft": 16,
+      "children": [
+       {
+        "id": "575:4706",
+        "name": "Greeting",
+        "type": "FRAME",
+        "layoutMode": "VERTICAL",
+        "itemSpacing": 4,
+        "paddingTop": 0,
+        "paddingRight": 0,
+        "paddingBottom": 0,
+        "paddingLeft": 0,
+        "children": [
+         {
+          "id": "575:4704",
+          "name": "Title",
+          "type": "TEXT",
+          "characters": "Good morning, Ritwik",
+          "style": {
+           "fontFamily": "SF Pro Text",
+           "fontWeight": 600,
+           "fontSize": 20,
+           "lineHeightPx": 25
+          }
+         },
+         {
+          "id": "575:4705",
+          "name": "Date",
+          "type": "TEXT",
+          "characters": "Fri, 22 May",
+          "style": {
+           "fontFamily": "SF Pro Text",
+           "fontWeight": 400,
+           "fontSize": 12,
+           "lineHeightPx": 16
+          }
+         }
+        ]
+       },
+       {
+        "id": "529:14078",
+        "name": "Hero / Money owed",
+        "type": "FRAME",
+        "layoutMode": "VERTICAL",
+        "itemSpacing": 4,
+        "paddingTop": 14,
+        "paddingRight": 14,
+        "paddingBottom": 14,
+        "paddingLeft": 14,
+        "children": [
+         {
+          "id": "575:4707",
+          "name": "Label",
+          "type": "TEXT",
+          "characters": "You're owed",
+          "style": {
+           "fontFamily": "SF Pro Text",
+           "fontWeight": 600,
+           "fontSize": 13,
+           "lineHeightPx": 18
+          }
+         },
+         {
+          "id": "575:4708",
+          "name": "Amount",
+          "type": "TEXT",
+          "characters": "$3,892",
+          "style": {
+           "fontFamily": "SF Pro Text",
+           "fontWeight": 700,
+           "fontSize": 32,
+           "lineHeightPx": 38
+          }
+         },
+         {
+          "id": "575:4709",
+          "name": "Meta",
+          "type": "TEXT",
+          "characters": "7 open invoices \u00b7 2 overdue",
+          "style": {
+           "fontFamily": "SF Pro Text",
+           "fontWeight": 400,
+           "fontSize": 12,
+           "lineHeightPx": 16
+          }
+         },
+         {
+          "id": "575:4714",
+          "name": "Actions",
+          "type": "FRAME",
+          "layoutMode": "HORIZONTAL",
+          "itemSpacing": 8,
+          "paddingTop": 0,
+          "paddingRight": 0,
+          "paddingBottom": 0,
+          "paddingLeft": 0,
+          "children": [
+           {
+            "id": "575:4711",
+            "name": "Button / Send reminders",
+            "type": "FRAME",
+            "layoutMode": "HORIZONTAL",
+            "itemSpacing": 0,
+            "paddingTop": 6,
+            "paddingRight": 12,
+            "paddingBottom": 6,
+            "paddingLeft": 12,
+            "children": [
+             {
+              "id": "575:4710",
+              "name": "Label",
+              "type": "TEXT",
+              "characters": "Send reminders",
+              "style": {
+               "fontFamily": "SF Pro Text",
+               "fontWeight": 600,
+               "fontSize": 14,
+               "lineHeightPx": 20
+              }
+             }
+            ]
+           },
+           {
+            "id": "575:4713",
+            "name": "Button / Collect",
+            "type": "FRAME",
+            "layoutMode": "HORIZONTAL",
+            "itemSpacing": 0,
+            "paddingTop": 6,
+            "paddingRight": 12,
+            "paddingBottom": 6,
+            "paddingLeft": 12,
+            "children": [
+             {
+              "id": "575:4712",
+              "name": "Label",
+              "type": "TEXT",
+              "characters": "Collect",
+              "style": {
+               "fontFamily": "SF Pro Text",
+               "fontWeight": 600,
+               "fontSize": 14,
+               "lineHeightPx": 20
+              }
+             }
+            ]
+           }
+          ]
+         }
+        ]
+       },
+       {
+        "id": "575:4630",
+        "name": "Needs attention",
+        "type": "FRAME",
+        "layoutMode": "VERTICAL",
+        "itemSpacing": 8,
+        "paddingTop": 0,
+        "paddingRight": 0,
+        "paddingBottom": 0,
+        "paddingLeft": 0,
+        "children": [
+         {
+          "id": "575:4718",
+          "name": "Module header",
+          "type": "FRAME",
+          "layoutMode": "HORIZONTAL",
+          "itemSpacing": 6,
+          "paddingTop": 0,
+          "paddingRight": 0,
+          "paddingBottom": 0,
+          "paddingLeft": 0,
+          "children": [
+           {
+            "id": "575:4715",
+            "name": "Heading",
+            "type": "TEXT",
+            "characters": "Needs attention",
+            "style": {
+             "fontFamily": "SF Pro Text",
+             "fontWeight": 600,
+             "fontSize": 16,
+             "lineHeightPx": 21
+            }
+           },
+           {
+            "id": "575:4716",
+            "name": "Count",
+            "type": "TEXT",
+            "characters": "4",
+            "style": {
+             "fontFamily": "SF Pro Text",
+             "fontWeight": 700,
+             "fontSize": 11,
+             "lineHeightPx": 13
+            }
+           },
+           {
+            "id": "575:4717",
+            "name": "Link",
+            "type": "TEXT",
+            "characters": "Show all",
+            "style": {
+             "fontFamily": "SF Pro Text",
+             "fontWeight": 600,
+             "fontSize": 14,
+             "lineHeightPx": 20
+            }
+           }
+          ]
+         },
+         {
+          "id": "575:4638",
+          "name": "Card / Disputes",
+          "type": "FRAME",
+          "layoutMode": "VERTICAL",
+          "itemSpacing": 4,
+          "paddingTop": 12,
+          "paddingRight": 12,
+          "paddingBottom": 12,
+          "paddingLeft": 12,
+          "children": [
+           {
+            "id": "575:4719",
+            "name": "Title",
+            "type": "TEXT",
+            "characters": "2 disputes \u00b7 $2,322",
+            "style": {
+             "fontFamily": "SF Pro Text",
+             "fontWeight": 600,
+             "fontSize": 15,
+             "lineHeightPx": 20
+            }
+           },
+           {
+            "id": "575:4720",
+            "name": "Body",
+            "type": "TEXT",
+            "characters": "Respond within 7 days to avoid auto-loss",
+            "style": {
+             "fontFamily": "SF Pro Text",
+             "fontWeight": 400,
+             "fontSize": 13,
+             "lineHeightPx": 18
+            }
+           },
+           {
+            "id": "575:4724",
+            "name": "Actions",
+            "type": "FRAME",
+            "layoutMode": "HORIZONTAL",
+            "itemSpacing": 8,
+            "paddingTop": 0,
+            "paddingRight": 0,
+            "paddingBottom": 0,
+            "paddingLeft": 0,
+            "children": [
+             {
+              "id": "575:4641",
+              "name": "Button / Ignore",
+              "type": "FRAME",
+              "layoutMode": "HORIZONTAL",
+              "itemSpacing": 0,
+              "paddingTop": 6,
+              "paddingRight": 12,
+              "paddingBottom": 6,
+              "paddingLeft": 12,
+              "children": [
+               {
+                "id": "575:4721",
+                "name": "Label",
+                "type": "TEXT",
+                "characters": "Ignore",
+                "style": {
+                 "fontFamily": "SF Pro Text",
+                 "fontWeight": 600,
+                 "fontSize": 14,
+                 "lineHeightPx": 20
+                }
+               }
+              ]
+             },
+             {
+              "id": "575:4723",
+              "name": "Button / Review disputes",
+              "type": "FRAME",
+              "layoutMode": "HORIZONTAL",
+              "itemSpacing": 0,
+              "paddingTop": 6,
+              "paddingRight": 12,
+              "paddingBottom": 6,
+              "paddingLeft": 12,
+              "children": [
+               {
+                "id": "575:4722",
+                "name": "Label",
+                "type": "TEXT",
+                "characters": "Review disputes",
+                "style": {
+                 "fontFamily": "SF Pro Text",
+                 "fontWeight": 600,
+                 "fontSize": 14,
+                 "lineHeightPx": 20
+                }
+               }
+              ]
+             }
+            ]
+           }
+          ]
+         }
+        ]
+       },
+       {
+        "id": "575:4616",
+        "name": "Shortcuts",
+        "type": "FRAME",
+        "layoutMode": "HORIZONTAL",
+        "itemSpacing": 10,
+        "paddingTop": 0,
+        "paddingRight": 0,
+        "paddingBottom": 0,
+        "paddingLeft": 0,
+        "children": [
+         {
+          "id": "575:4727",
+          "name": "Tile / Create invoice",
+          "type": "FRAME",
+          "layoutMode": "VERTICAL",
+          "itemSpacing": 4,
+          "paddingTop": 0,
+          "paddingRight": 0,
+          "paddingBottom": 0,
+          "paddingLeft": 0,
+          "children": [
+           {
+            "id": "575:4725",
+            "name": "Icon",
+            "type": "RECTANGLE"
+           },
+           {
+            "id": "575:4726",
+            "name": "Label",
+            "type": "TEXT",
+            "characters": "Create invoice",
+            "style": {
+             "fontFamily": "SF Pro Text",
+             "fontWeight": 600,
+             "fontSize": 12,
+             "lineHeightPx": 16
+            }
+           }
+          ]
+         },
+         {
+          "id": "575:4729",
+          "name": "Tile / Quick collect",
+          "type": "FRAME",
+          "layoutMode": "VERTICAL",
+          "itemSpacing": 4,
+          "paddingTop": 0,
+          "paddingRight": 0,
+          "paddingBottom": 0,
+          "paddingLeft": 0,
+          "children": [
+           {
+            "id": "575:4728",
+            "name": "Icon",
+            "type": "RECTANGLE"
+           },
+           {
+            "id": "575:4617",
+            "name": "Label",
+            "type": "TEXT",
+            "characters": "Quick collect",
+            "style": {
+             "fontFamily": "SF Pro Text",
+             "fontWeight": 600,
+             "fontSize": 12,
+             "lineHeightPx": 16
+            }
+           }
+          ]
+         },
+         {
+          "id": "575:4732",
+          "name": "Tile / Create estimate",
+          "type": "FRAME",
+          "layoutMode": "VERTICAL",
+          "itemSpacing": 4,
+          "paddingTop": 0,
+          "paddingRight": 0,
+          "paddingBottom": 0,
+          "paddingLeft": 0,
+          "children": [
+           {
+            "id": "575:4730",
+            "name": "Icon",
+            "type": "RECTANGLE"
+           },
+           {
+            "id": "575:4731",
+            "name": "Label",
+            "type": "TEXT",
+            "characters": "Create estimate",
+            "style": {
+             "fontFamily": "SF Pro Text",
+             "fontWeight": 600,
+             "fontSize": 12,
+             "lineHeightPx": 16
+            }
+           }
+          ]
+         },
+         {
+          "id": "575:4735",
+          "name": "Tile / Create job",
+          "type": "FRAME",
+          "layoutMode": "VERTICAL",
+          "itemSpacing": 4,
+          "paddingTop": 0,
+          "paddingRight": 0,
+          "paddingBottom": 0,
+          "paddingLeft": 0,
+          "children": [
+           {
+            "id": "575:4733",
+            "name": "Icon",
+            "type": "RECTANGLE"
+           },
+           {
+            "id": "575:4734",
+            "name": "Label",
+            "type": "TEXT",
+            "characters": "Create job",
+            "style": {
+             "fontFamily": "SF Pro Text",
+             "fontWeight": 600,
+             "fontSize": 12,
+             "lineHeightPx": 16
+            }
+           }
+          ]
+         }
+        ]
+       },
+       {
+        "id": "575:4842",
+        "name": "Pending invoices",
+        "type": "FRAME",
+        "layoutMode": "VERTICAL",
+        "itemSpacing": 0,
+        "paddingTop": 0,
+        "paddingRight": 0,
+        "paddingBottom": 0,
+        "paddingLeft": 0,
+        "children": [
+         {
+          "id": "575:4738",
+          "name": "Module header",
+          "type": "FRAME",
+          "layoutMode": "HORIZONTAL",
+          "itemSpacing": 8,
+          "paddingTop": 0,
+          "paddingRight": 0,
+          "paddingBottom": 0,
+          "paddingLeft": 0,
+          "children": [
+           {
+            "id": "575:4736",
+            "name": "Heading",
+            "type": "TEXT",
+            "characters": "Pending invoices",
+            "style": {
+             "fontFamily": "SF Pro Text",
+             "fontWeight": 600,
+             "fontSize": 16,
+             "lineHeightPx": 21
+            }
+           },
+           {
+            "id": "575:4737",
+            "name": "Link",
+            "type": "TEXT",
+            "characters": "See all",
+            "style": {
+             "fontFamily": "SF Pro Text",
+             "fontWeight": 600,
+             "fontSize": 14,
+             "lineHeightPx": 20
+            }
+           }
+          ]
+         },
+         {
+          "id": "575:4744",
+          "name": "Invoice row 1",
+          "type": "FRAME",
+          "layoutMode": "HORIZONTAL",
+          "itemSpacing": 12,
+          "paddingTop": 8,
+          "paddingRight": 0,
+          "paddingBottom": 8,
+          "paddingLeft": 0,
+          "children": [
+           {
+            "id": "575:4740",
+            "name": "Who",
+            "type": "FRAME",
+            "layoutMode": "VERTICAL",
+            "itemSpacing": 2,
+            "paddingTop": 0,
+            "paddingRight": 0,
+            "paddingBottom": 0,
+            "paddingLeft": 0,
+            "children": [
+             {
+              "id": "575:4739",
+              "name": "Name",
+              "type": "TEXT",
+              "characters": "Sam Altman",
+              "style": {
+               "fontFamily": "SF Pro Text",
+               "fontWeight": 400,
+               "fontSize": 14,
+               "lineHeightPx": 20
+              }
+             },
+             {
+              "id": "575:4820",
+              "name": "Date",
+              "type": "TEXT",
+              "characters": "Apr 22, 2026",
+              "style": {
+               "fontFamily": "SF Pro Text",
+               "fontWeight": 400,
+               "fontSize": 12,
+               "lineHeightPx": 16
+              }
+             }
+            ]
+           },
+           {
+            "id": "575:4743",
+            "name": "Amount",
+            "type": "FRAME",
+            "layoutMode": "VERTICAL",
+            "itemSpacing": 2,
+            "paddingTop": 0,
+            "paddingRight": 0,
+            "paddingBottom": 0,
+            "paddingLeft": 0,
+            "children": [
+             {
+              "id": "575:4741",
+              "name": "Amount",
+              "type": "TEXT",
+              "characters": "$232.23",
+              "style": {
+               "fontFamily": "SF Pro Text",
+               "fontWeight": 600,
+               "fontSize": 14,
+               "lineHeightPx": 20
+              }
+             },
+             {
+              "id": "575:4742",
+              "name": "Badge",
+              "type": "TEXT",
+              "characters": "7d overdue",
+              "style": {
+               "fontFamily": "SF Pro Text",
+               "fontWeight": 600,
+               "fontSize": 11,
+               "lineHeightPx": 13
+              }
+             }
+            ]
+           }
+          ]
+         },
+         {
+          "id": "575:4751",
+          "name": "Invoice row 2",
+          "type": "FRAME",
+          "layoutMode": "HORIZONTAL",
+          "itemSpacing": 12,
+          "paddingTop": 8,
+          "paddingRight": 0,
+          "paddingBottom": 8,
+          "paddingLeft": 0,
+          "children": [
+           {
+            "id": "575:4747",
+            "name": "Who",
+            "type": "FRAME",
+            "layoutMode": "VERTICAL",
+            "itemSpacing": 2,
+            "paddingTop": 0,
+            "paddingRight": 0,
+            "paddingBottom": 0,
+            "paddingLeft": 0,
+            "children": [
+             {
+              "id": "575:4745",
+              "name": "Name",
+              "type": "TEXT",
+              "characters": "Sam Altman",
+              "style": {
+               "fontFamily": "SF Pro Text",
+               "fontWeight": 400,
+               "fontSize": 14,
+               "lineHeightPx": 20
+              }
+             },
+             {
+              "id": "575:4746",
+              "name": "Date",
+              "type": "TEXT",
+              "characters": "Apr 22, 2026",
+              "style": {
+               "fontFamily": "SF Pro Text",
+               "fontWeight": 400,
+               "fontSize": 12,
+               "lineHeightPx": 16
+              }
+             }
+            ]
+           },
+           {
+            "id": "575:4750",
+            "name": "Amount",
+            "type": "FRAME",
+            "layoutMode": "VERTICAL",
+            "itemSpacing": 2,
+            "paddingTop": 0,
+            "paddingRight": 0,
+            "paddingBottom": 0,
+            "paddingLeft": 0,
+            "children": [
+             {
+              "id": "575:4748",
+              "name": "Amount",
+              "type": "TEXT",
+              "characters": "$232.23",
+              "style": {
+               "fontFamily": "SF Pro Text",
+               "fontWeight": 600,
+               "fontSize": 14,
+               "lineHeightPx": 20
+              }
+             },
+             {
+              "id": "575:4749",
+              "name": "Badge",
+              "type": "TEXT",
+              "characters": "7d overdue",
+              "style": {
+               "fontFamily": "SF Pro Text",
+               "fontWeight": 600,
+               "fontSize": 11,
+               "lineHeightPx": 13
+              }
+             }
+            ]
+           }
+          ]
+         },
+         {
+          "id": "575:4758",
+          "name": "Invoice row 3",
+          "type": "FRAME",
+          "layoutMode": "HORIZONTAL",
+          "itemSpacing": 12,
+          "paddingTop": 8,
+          "paddingRight": 0,
+          "paddingBottom": 8,
+          "paddingLeft": 0,
+          "children": [
+           {
+            "id": "575:4754",
+            "name": "Who",
+            "type": "FRAME",
+            "layoutMode": "VERTICAL",
+            "itemSpacing": 2,
+            "paddingTop": 0,
+            "paddingRight": 0,
+            "paddingBottom": 0,
+            "paddingLeft": 0,
+            "children": [
+             {
+              "id": "575:4752",
+              "name": "Name",
+              "type": "TEXT",
+              "characters": "Sam Altman",
+              "style": {
+               "fontFamily": "SF Pro Text",
+               "fontWeight": 400,
+               "fontSize": 14,
+               "lineHeightPx": 20
+              }
+             },
+             {
+              "id": "575:4753",
+              "name": "Date",
+              "type": "TEXT",
+              "characters": "Apr 22, 2026",
+              "style": {
+               "fontFamily": "SF Pro Text",
+               "fontWeight": 400,
+               "fontSize": 12,
+               "lineHeightPx": 16
+              }
+             }
+            ]
+           },
+           {
+            "id": "575:4757",
+            "name": "Amount",
+            "type": "FRAME",
+            "layoutMode": "VERTICAL",
+            "itemSpacing": 2,
+            "paddingTop": 0,
+            "paddingRight": 0,
+            "paddingBottom": 0,
+            "paddingLeft": 0,
+            "children": [
+             {
+              "id": "575:4755",
+              "name": "Amount",
+              "type": "TEXT",
+              "characters": "$232.23",
+              "style": {
+               "fontFamily": "SF Pro Text",
+               "fontWeight": 600,
+               "fontSize": 14,
+               "lineHeightPx": 20
+              }
+             },
+             {
+              "id": "575:4756",
+              "name": "Badge",
+              "type": "TEXT",
+              "characters": "7d overdue",
+              "style": {
+               "fontFamily": "SF Pro Text",
+               "fontWeight": 600,
+               "fontSize": 11,
+               "lineHeightPx": 13
+              }
+             }
+            ]
+           }
+          ]
+         }
+        ]
+       }
+      ]
+     },
+     {
+      "id": "575:4900",
+      "name": "Tab bar",
+      "type": "FRAME",
+      "layoutMode": "HORIZONTAL",
+      "itemSpacing": 0,
+      "paddingTop": 6,
+      "paddingRight": 16,
+      "paddingBottom": 24,
+      "paddingLeft": 16,
+      "children": [
+       {
+        "id": "575:4761",
+        "name": "Tab / Home",
+        "type": "FRAME",
+        "layoutMode": "VERTICAL",
+        "itemSpacing": 2,
+        "paddingTop": 0,
+        "paddingRight": 0,
+        "paddingBottom": 0,
+        "paddingLeft": 0,
+        "children": [
+         {
+          "id": "575:4759",
+          "name": "Icon",
+          "type": "INSTANCE"
+         },
+         {
+          "id": "575:4760",
+          "name": "Label",
+          "type": "TEXT",
+          "characters": "Home",
+          "style": {
+           "fontFamily": "SF Pro Text",
+           "fontWeight": 500,
+           "fontSize": 11,
+           "lineHeightPx": 13
+          }
+         }
+        ]
+       },
+       {
+        "id": "575:4764",
+        "name": "Tab / Jobs",
+        "type": "FRAME",
+        "layoutMode": "VERTICAL",
+        "itemSpacing": 2,
+        "paddingTop": 0,
+        "paddingRight": 0,
+        "paddingBottom": 0,
+        "paddingLeft": 0,
+        "children": [
+         {
+          "id": "575:4762",
+          "name": "Icon",
+          "type": "INSTANCE"
+         },
+         {
+          "id": "575:4763",
+          "name": "Label",
+          "type": "TEXT",
+          "characters": "Jobs",
+          "style": {
+           "fontFamily": "SF Pro Text",
+           "fontWeight": 500,
+           "fontSize": 11,
+           "lineHeightPx": 13
+          }
+         }
+        ]
+       },
+       {
+        "id": "575:4767",
+        "name": "Tab / Estimates",
+        "type": "FRAME",
+        "layoutMode": "VERTICAL",
+        "itemSpacing": 2,
+        "paddingTop": 0,
+        "paddingRight": 0,
+        "paddingBottom": 0,
+        "paddingLeft": 0,
+        "children": [
+         {
+          "id": "575:4765",
+          "name": "Icon",
+          "type": "INSTANCE"
+         },
+         {
+          "id": "575:4766",
+          "name": "Label",
+          "type": "TEXT",
+          "characters": "Estimates",
+          "style": {
+           "fontFamily": "SF Pro Text",
+           "fontWeight": 500,
+           "fontSize": 11,
+           "lineHeightPx": 13
+          }
+         }
+        ]
+       },
+       {
+        "id": "575:4770",
+        "name": "Tab / Invoices",
+        "type": "FRAME",
+        "layoutMode": "VERTICAL",
+        "itemSpacing": 2,
+        "paddingTop": 0,
+        "paddingRight": 0,
+        "paddingBottom": 0,
+        "paddingLeft": 0,
+        "children": [
+         {
+          "id": "575:4768",
+          "name": "Icon",
+          "type": "INSTANCE"
+         },
+         {
+          "id": "575:4769",
+          "name": "Label",
+          "type": "TEXT",
+          "characters": "Invoices",
+          "style": {
+           "fontFamily": "SF Pro Text",
+           "fontWeight": 500,
+           "fontSize": 11,
+           "lineHeightPx": 13
+          }
+         }
+        ]
+       },
+       {
+        "id": "575:4773",
+        "name": "Tab / Balance",
+        "type": "FRAME",
+        "layoutMode": "VERTICAL",
+        "itemSpacing": 2,
+        "paddingTop": 0,
+        "paddingRight": 0,
+        "paddingBottom": 0,
+        "paddingLeft": 0,
+        "children": [
+         {
+          "id": "575:4771",
+          "name": "Icon",
+          "type": "INSTANCE"
+         },
+         {
+          "id": "575:4772",
+          "name": "Label",
+          "type": "TEXT",
+          "characters": "Balance",
+          "style": {
+           "fontFamily": "SF Pro Text",
+           "fontWeight": 500,
+           "fontSize": 11,
+           "lineHeightPx": 13
+          }
+         }
+        ]
+       }
+      ]
+     }
+    ],
+    "absoluteBoundingBox": {
+     "x": 0,
+     "y": 0,
+     "width": 390,
+     "height": 844
+    }
+   }
+  }
+ }
+}

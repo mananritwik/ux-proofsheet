@@ -1,0 +1,11 @@
+<frame id="575:4610" name="Content" x="0" y="44" width="390" height="700">
+  <frame id="575:4601" name="Greeting" x="16" y="12" width="358" height="45" />
+  <frame id="529:14078" name="Hero / Money owed" x="16" y="73" width="358" height="148" />
+  <frame id="575:4630" name="Needs attention" x="16" y="237" width="358" height="130" />
+  <frame id="575:4616" name="Shortcuts" x="16" y="381" width="358" height="62">
+    <frame id="575:4620" name="Tile / Create invoice" x="0" y="0" width="82" height="62" />
+    <frame id="575:4621" name="Tile / Quick collect" x="92" y="0" width="82" height="62" />
+    <frame id="575:4622" name="Tile / Create estimate" x="184" y="0" width="82" height="62" />
+    <frame id="575:4623" name="Tile / Create job" x="276" y="0" width="82" height="62" />
+  </frame>
+</frame>

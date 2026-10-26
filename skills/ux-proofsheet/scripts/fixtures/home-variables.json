@@ -1,0 +1,22 @@
+{
+  "Type/Caption": "Font(family: \"SF Pro Text\", style: Medium, size: 11, weight: 500, lineHeight: 13, letterSpacing: 0)",
+  "Type/Meta": "Font(family: \"SF Pro Text\", style: Regular, size: 12, weight: 400, lineHeight: 16, letterSpacing: 0)",
+  "Type/Body small": "Font(family: \"SF Pro Text\", style: Regular, size: 13, weight: 400, lineHeight: 18, letterSpacing: 0)",
+  "Type/Body": "Font(family: \"SF Pro Text\", style: Regular, size: 14, weight: 400, lineHeight: 20, letterSpacing: 0)",
+  "Type/Card title": "Font(family: \"SF Pro Text\", style: Semi Bold, size: 15, weight: 600, lineHeight: 20, letterSpacing: 0)",
+  "Type/Module heading": "Font(family: \"SF Pro Text\", style: Semi Bold, size: 16, weight: 600, lineHeight: 21, letterSpacing: 0)",
+  "Type/Greeting": "Font(family: \"SF Pro Display\", style: Semi Bold, size: 20, weight: 600, lineHeight: 25, letterSpacing: 0)",
+  "Type/Hero amount": "Font(family: \"SF Pro Display\", style: Bold, size: 32, weight: 700, lineHeight: 38, letterSpacing: 0)",
+  "spacing/xxs": "2",
+  "spacing/xs": "4",
+  "spacing/sm": "8",
+  "spacing/md": "12",
+  "spacing/card": "14",
+  "spacing/lg": "16",
+  "spacing/xl": "24",
+  "radius/card": "12",
+  "brand/blue": "#1069CF",
+  "text/header": "#101418",
+  "outline-deafult": "#E6E9ED",
+  "nuetrals/white": "#FFFFFF"
+}
