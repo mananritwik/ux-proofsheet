@@ -48,8 +48,8 @@ Best with the [Mobbin](https://mobbin.com/mcp) and [Figma](https://www.figma.com
 
 Before your first real review, confirm both MCPs respond:
 
-1. **Figma** — open a frame URL; the agent can `get_screenshot` / `get_design_context`.
-2. **Mobbin** — a simple `search_screens` (e.g. `"ios home dashboard"`) returns results.
+1. **Figma**: open a frame URL; the agent can `get_screenshot` / `get_design_context`.
+2. **Mobbin**: a simple `search_screens` (e.g. `"ios home dashboard"`) returns results.
 
 Paste-ready prompts live in [`skills/ux-proofsheet/references/prompt-cookbook.md`](skills/ux-proofsheet/references/prompt-cookbook.md). Ask for **Quick** (one screen, top findings) or **Full** (complete proofsheet).
 
