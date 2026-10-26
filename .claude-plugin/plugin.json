@@ -1,7 +1,7 @@
 {
   "name": "ux-proofsheet",
-  "version": "1.2.0",
-  "description": "Benchmark a UI/UX design against real competitor screenshots. Reads a Figma design, pulls real competitor screens from Mobbin, and produces a scored, evidence-backed HTML review.",
+  "version": "1.3.0",
+  "description": "Benchmark a UI/UX design against real competitor screenshots. Reads a Figma design, pulls real competitor screens from Mobbin, and produces a scored, evidence-backed HTML review. Measures the type ramp and spacing scale against Material 3 and Apple HIG.",
   "author": {
     "name": "Ritwik Manan"
   },
@@ -15,6 +15,8 @@
     "competitive-analysis",
     "design-review",
     "benchmark",
+    "design-tokens",
+    "typography",
     "claude-skills",
     "agent-skills"
   ],
