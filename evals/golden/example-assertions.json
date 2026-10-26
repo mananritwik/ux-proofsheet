@@ -6,6 +6,7 @@
         "The design under review",
         "What's working",
         "UX copy",
+        "Token layer: type ramp and spacing (measured)",
         "UX copy matrix",
         "Benchmark — real apps",
         "Prevalence — what the design already matches",
@@ -13,19 +14,71 @@
         "Share summary",
         "Recommended follow-ups"
       ],
-      "required_finding_ids": ["C1", "C2", "D1", "D2", "A1"],
+      "required_finding_ids": [
+        "C1",
+        "C2",
+        "D1",
+        "D2",
+        "A1",
+        "T1",
+        "T2",
+        "T3",
+        "T4"
+      ],
       "required_substrings": [
         "recreated",
         "Open in Figma",
         "View ↗",
         "dig into C1",
         "#798087 on #fff = 4.0:1",
-        "#b50012 on #ffe8ea = 6.05:1"
+        "#b50012 on #ffe8ea = 6.05:1",
+        "https://m3.material.io/styles/typography/type-scale-tokens",
+        "https://developer.apple.com/design/human-interface-guidelines/typography",
+        "https://m2.material.io/design/layout/spacing-methods.html",
+        "Apple publishes no iOS spacing grid",
+        "the tool's heuristic",
+        "dig into T2"
       ],
       "contrast_checks": [
-        {"fg": "#798087", "bg": "#ffffff", "expected_ratio": 4.0, "tolerance": 0.15},
-        {"fg": "#b50012", "bg": "#ffe8ea", "expected_ratio": 6.05, "tolerance": 0.2}
-      ]
+        {
+          "fg": "#798087",
+          "bg": "#ffffff",
+          "expected_ratio": 4.0,
+          "tolerance": 0.15
+        },
+        {
+          "fg": "#b50012",
+          "bg": "#ffe8ea",
+          "expected_ratio": 6.05,
+          "tolerance": 0.2
+        }
+      ],
+      "token_check": {
+        "fixture": "skills/ux-proofsheet/scripts/fixtures/home-nodes.json",
+        "expected_baseline": "hig_ios",
+        "expected_findings": [
+          [
+            "T1",
+            "spacing_off_grid",
+            "medium"
+          ],
+          [
+            "T2",
+            "type_crowded",
+            "medium"
+          ],
+          [
+            "T3",
+            "type_off_baseline",
+            "medium"
+          ],
+          [
+            "T4",
+            "type_jump",
+            "low"
+          ]
+        ]
+      }
     }
   ]
 }

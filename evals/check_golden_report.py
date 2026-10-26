@@ -2,8 +2,9 @@
 """
 check_golden_report.py — assert committed sample HTML matches golden expectations.
 
-Does not re-run Mobbin/Figma. Validates structure + recomputes contrast numbers
-cited in the sample via contrast.py.
+Does not re-run Mobbin/Figma. Validates structure, recomputes contrast numbers
+cited in the sample via contrast.py, and re-runs token_check.py on the committed
+Figma fixture to confirm the sample's token-layer numbers match the tool.
 
 Usage:
     python check_golden_report.py
@@ -19,6 +20,42 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "skills" / "ux-proofsheet" / "scripts"))
 import contrast  # noqa: E402
+import token_check  # noqa: E402
+
+
+def _x(r):
+    return f"×{r}"
+
+
+def check_tokens(repo: Path, label: str, html: str, spec: dict) -> list:
+    """Re-run token_check on the fixture; the sample must quote its numbers."""
+    errors = []
+    result = token_check.check([repo / spec["fixture"]], baseline=spec.get("baseline", "auto"))
+    t, s = result["type"], result["spacing"]
+    cited = {
+        "type ramp": " · ".join(str(v) for v in t["ramp"]),
+        "overall ratio": _x(t["overall_ratio"]),
+        "spacing scale": " · ".join(str(v) for v in s["scale"]),
+        "share on 4dp grid": f"{round(s['share_on_4'] * 100)}% of uses sit on the 4dp grid",
+    }
+    for what, text in cited.items():
+        if text not in html:
+            errors.append(f"{label}: token {what} {text!r} not quoted in sample")
+    if t["baseline"] != spec["expected_baseline"]:
+        errors.append(f"{label}: token baseline {t['baseline']}, expected {spec['expected_baseline']}")
+    got = [(f["id"], f["kind"], f["severity"]) for f in result["findings"]]
+    exp = [tuple(x) for x in spec["expected_findings"]]
+    if got != exp:
+        errors.append(f"{label}: token findings {got}, expected {exp}")
+    for f in result["findings"]:
+        sev = {"medium": "s-med", "low": "s-low", "high": "s-high", "info": "s-info"}[f["severity"]]
+        head = f'<span class="id">{f["id"]}</span><span class="title">'
+        i = html.find(head)
+        if i < 0 or sev not in html[i:i + 400]:
+            errors.append(f"{label}: finding {f['id']} missing or wrong severity in sample")
+        if f.get("node") and f"node-id={f['node'].replace(':', '-')}" not in html:
+            errors.append(f"{label}: finding {f['id']} Figma node {f['node']} not linked")
+    return errors
 
 
 def check_sample(repo: Path, spec: dict) -> list[str]:
@@ -46,6 +83,8 @@ def check_sample(repo: Path, spec: dict) -> list[str]:
             errors.append(
                 f"{spec['path']}: contrast {c['fg']} on {c['bg']} = {got}, expected ~{exp}"
             )
+    if "token_check" in spec:
+        errors.extend(check_tokens(repo, spec["path"], html, spec["token_check"]))
     return errors
 
 
@@ -66,7 +105,7 @@ def main():
         for e in errors:
             print(" -", e)
         sys.exit(1)
-    print(f"PASS — {len(data['samples'])} sample(s) match golden assertions")
+    print(f"PASS: {len(data['samples'])} sample(s) match golden assertions")
 
 
 if __name__ == "__main__":

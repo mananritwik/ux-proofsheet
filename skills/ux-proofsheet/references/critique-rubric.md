@@ -31,6 +31,12 @@ Token hygiene is a superpower you get *only* from reading Figma — Mobbin can't
 give it to you. Always check for misspelled variable names, hardcoded hex where a
 token exists, and two near-identical values. These ship straight into code.
 
+**The token layer is measured too.** In Full mode, `scripts/token_check.py` reads
+the type ramp and spacing scale and flags off-grid spacing, crowded or off-baseline
+type sizes, and jumps against Material 3 / Apple HIG. Report them as `T` findings
+under Visual & tokens. Apple publishes no iOS spacing grid, so never write "violates
+HIG" for spacing; the grid check is Material's.
+
 **Accessibility is measured, not guessed.** You extracted the color tokens from
 Figma, so run `scripts/contrast.py` on the foreground/background pairs and report
 the actual WCAG ratios (e.g. `#798087` on `#fff` = 4.0:1 — fails AA normal, borderline).

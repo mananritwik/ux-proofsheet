@@ -128,6 +128,16 @@
     display:flex;align-items:center;justify-content:center}
   .foot{margin-top:40px;border-top:1px solid var(--line);padding-top:16px;font-size:12px;color:var(--sub)}
   @media(max-width:720px){.scorecard,.compare,.refgrid{grid-template-columns:1fr}.dims{grid-template-columns:1fr}}
+  /* ---------- token layer (scripts/token_check.py) ---------- */
+  .tokgrid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}
+  .tokcard{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:14px 16px;font-size:13px}
+  .tokcard h3{font-size:12px;text-transform:uppercase;letter-spacing:.04em;color:var(--sub);margin:0 0 10px}
+  .chips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}
+  .chip{font:600 12px ui-monospace,Menlo,monospace;border:1px solid var(--line);border-radius:6px;padding:3px 7px;background:var(--bg)}
+  .chip.off{background:var(--highbg);color:var(--high)}
+  .chip small{display:block;font:500 9px -apple-system,BlinkMacSystemFont,sans-serif;color:var(--sub)}
+  .toknote{font-size:12px;color:var(--sub);margin-top:4px}
+  @media(max-width:720px){.tokgrid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -212,6 +222,27 @@
         </div>
       </div>
     </div>
+  </section>
+
+  <!-- ============ TOKEN LAYER (Full mode; omit if token_check.py did not run) ============ -->
+  <!-- Every number here is copied from token_check.py output. Never retype or estimate. -->
+  <section>
+    <h2>Token layer: type ramp and spacing (measured)</h2>
+    <div class="tokgrid">
+      <div class="tokcard"><h3>Type ramp</h3>
+        <div class="chips"><!-- one per size; add class "off" when not a baseline size -->
+          <span class="chip">{{SIZE}}<small>{{BASELINE_STYLE_OR_NOT}} · {{USES}}×</small></span>
+        </div>
+        Ramp {{RAMP}}. Ratio ×{{OVERALL_RATIO}} (nearest {{NAMED_RATIO}}). Fits {{BASELINE_FIT}}.
+      </div>
+      <div class="tokcard"><h3>Spacing scale</h3>
+        Scale {{SPACING_SCALE}}. Base unit: {{BASE_UNIT}} ({{SHARE_ON_4}} on the 4dp grid).
+        <div class="toknote">Grid: Material 4dp/8dp. Apple publishes no iOS spacing grid.</div>
+      </div>
+    </div>
+    <!-- Then one .find block per T finding (same markup as above):
+         ID = T1…, title, severity, Fix, Backs = cited baseline + link, Layer = Open in Figma.
+         Say "(tool heuristic)" next to any threshold the finding's JSON marks as heuristic. -->
   </section>
 
   <!-- ============ UX COPY MATRIX ============ -->

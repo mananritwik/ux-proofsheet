@@ -17,7 +17,7 @@ solve this pattern?"* Descriptive truth. Everything in v1 leans on Tier 1.
 - **Strength:** it *is* the competitor's artifact — highest authority for patterns.
 - **Limit:** shows current UI, not the underlying tokens/system.
 
-### Tier 2 — authoritative systems (roadmap; light in v1)
+### Tier 2 — authoritative systems (canonical baselines since v1.3)
 
 Real, published design systems: a competitor's actual system via the Figma MCP
 (when you have the file), or canonical references like Material 3 / Apple HIG used
@@ -28,6 +28,9 @@ type ramps, color roles — which screenshots show but don't quantify.
 - **Strength:** quantified, precise ("their scale steps 4/8/12/20; yours jumps").
 - **Limit:** you rarely have a *specific competitor's* real tokens (their Figma is
   private), so this is usually canonical baselines + the user's own system.
+- **In use:** `scripts/token_check.py` compares the design's type ramp and spacing
+  to Material 3 and Apple HIG, with every number cited in
+  `references/token-baselines.md`.
 
 ### Tier 3 — community specs (roadmap; inspiration only)
 

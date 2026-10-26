@@ -11,6 +11,9 @@
   pixels live behind permanent Mobbin "View ↗" and Figma "Open in Figma ↗" links
   — never hotlinked expiring screenshot URLs. Content is a fictional field-service
   app; app names are real public products used as benchmark refs.
+  Token layer (v1.3): numbers are the real output of scripts/token_check.py run on
+  skills/ux-proofsheet/scripts/fixtures/home-nodes.json, a hand-written Figma node
+  tree for this same fictional screen. evals/check_golden_report.py re-runs it.
 -->
 <style>
   :root{
@@ -117,6 +120,22 @@
   .copymatrix tr:last-child td{border-bottom:none}
   .copymatrix code{font:600 12px ui-monospace,Menlo,monospace;background:var(--bg);border-radius:4px;padding:1px 5px}
   .ratio{font:600 12px ui-monospace,Menlo,monospace;background:var(--bg);border-radius:4px;padding:1px 5px}
+  /* token layer */
+  .tokgrid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}
+  .tokcard{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:14px 16px;font-size:13px;color:#2b333b}
+  .tokcard h3{font-size:12px;text-transform:uppercase;letter-spacing:.04em;color:var(--sub);margin:0 0 10px}
+  .chips{display:flex;flex-wrap:wrap;gap:6px;align-items:flex-end;margin-bottom:10px}
+  .chip{font:600 12px ui-monospace,Menlo,monospace;border:1px solid var(--line);border-radius:6px;padding:3px 7px;background:var(--bg)}
+  .chip.off{background:var(--highbg);border-color:#f3b8bf;color:var(--high)}
+  .chip small{display:block;font:500 9px -apple-system,BlinkMacSystemFont,sans-serif;color:var(--sub)}
+  .chip.off small{color:var(--high)}
+  .spbars{display:flex;align-items:flex-end;gap:5px;height:60px;margin-bottom:10px}
+  .spbars div{flex:1;text-align:center;font:600 10px ui-monospace,Menlo,monospace;color:var(--sub)}
+  .spbars i{display:block;background:var(--brandbg);border:1px solid #b9d6f5;border-radius:3px;margin-bottom:3px}
+  .spbars .off i{background:var(--highbg);border-color:#f3b8bf}.spbars .off{color:var(--high)}
+  .toknote{font-size:12px;color:var(--sub);margin-top:4px}
+  .toknote a,.tokcard a{color:var(--brand);text-decoration:none;font-weight:600}
+  @media(max-width:720px){.tokgrid{grid-template-columns:1fr}}
   /* crop mini-elements */
   .m-btnrow{display:flex;gap:5px;justify-content:flex-end;margin-top:20px}
   .m-btn{font-size:9px;font-weight:700;border-radius:5px;padding:4px 7px}
@@ -158,15 +177,15 @@
       <div class="position">Competitive position: <span class="badge">On par → slightly ahead</span> of the field-service market on information hierarchy; behind on copy consistency.</div>
       <div class="tally">
         <span class="pill p-high"><span class="dot"></span>2 High</span>
-        <span class="pill p-med"><span class="dot"></span>4 Medium</span>
-        <span class="pill p-low"><span class="dot"></span>2 Low</span>
+        <span class="pill p-med"><span class="dot"></span>7 Medium</span>
+        <span class="pill p-low"><span class="dot"></span>3 Low</span>
         <span class="pill p-info"><span class="dot"></span>3 Fix before share</span>
       </div>
     </div>
     <div class="dims">
       <div class="dim"><span class="name">Navigation &amp; IA</span><span class="bar"><i style="width:80%"></i></span><span class="n">4</span></div>
       <div class="dim"><span class="name">UX copy</span><span class="bar"><i style="width:40%"></i></span><span class="n">2</span></div>
-      <div class="dim"><span class="name">Visual &amp; tokens</span><span class="bar"><i style="width:60%"></i></span><span class="n">3</span></div>
+      <div class="dim"><span class="name">Visual &amp; tokens</span><span class="bar"><i style="width:50%"></i></span><span class="n">2.5</span></div>
       <div class="dim"><span class="name">Accessibility</span><span class="bar"><i style="width:70%"></i></span><span class="n">3.5</span></div>
     </div>
   </div>
@@ -282,6 +301,88 @@
     </div>
   </section>
 
+  <!-- ============ TOKEN LAYER (v1.3, measured by scripts/token_check.py) ============ -->
+  <section>
+    <h2>Token layer: type ramp and spacing (measured)</h2>
+    <div class="tokgrid">
+      <div class="tokcard"><h3>Type ramp</h3>
+        <div class="chips"><span class="chip">11<small>Caption 2 · 9×</small></span><span class="chip">12<small>Caption 1 · 9×</small></span><span class="chip">13<small>Footnote · 2×</small></span><span class="chip off">14<small>not HIG · 12×</small></span><span class="chip">15<small>Subhead · 1×</small></span><span class="chip">16<small>Callout · 3×</small></span><span class="chip">20<small>Title 3 · 1×</small></span><span class="chip off">32<small>not HIG · 1×</small></span></div>
+        Ramp <span class="ratio">11 · 12 · 13 · 14 · 15 · 16 · 20 · 32</span>. Steps average <span class="ratio">×1.165</span> (nearest named ratio: Minor Third) but range from ×1.07 to ×1.60, so there is no steady scale.
+        <div class="toknote">Fits <b>Apple HIG</b> text styles 6/8 and <b>Material 3</b> 5/8, so it is checked against HIG. Red = not a HIG size.</div>
+      </div>
+      <div class="tokcard"><h3>Spacing scale</h3>
+        <div class="spbars"><div class="off"><i style="height:4px"></i>2</div><div><i style="height:7px"></i>4</div><div class="off"><i style="height:11px"></i>6</div><div><i style="height:14px"></i>8</div><div class="off"><i style="height:18px"></i>10</div><div><i style="height:22px"></i>12</div><div class="off"><i style="height:25px"></i>14</div><div><i style="height:29px"></i>16</div><div><i style="height:43px"></i>24</div></div>
+        Scale <span class="ratio">2 · 4 · 6 · 8 · 10 · 12 · 14 · 16 · 24</span>. Base unit: <b>irregular, closest 4</b>. 63% of uses sit on the 4dp grid, 28% on 8dp.
+        <div class="toknote">Apple publishes no iOS spacing grid, so spacing is checked against the <a href="https://m2.material.io/design/layout/spacing-methods.html">Material 4dp/8dp grid</a>. Red = off the 4dp grid.</div>
+      </div>
+    </div>
+
+    <div class="find">
+      <div class="head"><span class="id">T1</span><span class="title">4 spacing values sit off the 4dp grid (26 of 71 uses)</span><span class="sev s-med">MEDIUM</span></div>
+      <div class="body">
+        <div class="crop"><div class="clabel">Hero padding · T1</div>
+          <div style="border:1px dashed var(--high);border-radius:6px;padding:7px"><div class="m-hero" style="padding:6px"><div class="l">You're owed</div><div class="a" style="font-size:14px">$3,892</div></div></div>
+          <div style="font-size:9px;color:var(--high);margin-top:5px;font-weight:700">padding 14 (screen uses 16)</div>
+        </div>
+        <div class="findmain">
+          Auto-layout gaps and padding use <span class="quote">2</span> <span class="quote">6</span> <span class="quote">10</span> <span class="quote">14</span>, each a step off the grid the rest of the screen follows. The hero's 14 padding sits next to the 16 screen margin, so its edges never line up.
+          <div class="row"><div class="k">Fix</div><div class="v">Round up to values already in use: 2 → 4, 6 → 8, 10 → 12, 14 → 16.</div></div>
+          <div class="row"><div class="k">Backs</div><div class="v">Material 4dp/8dp grid · <a href="https://m2.material.io/design/layout/spacing-methods.html">Spacing methods ↗</a></div></div>
+          <div class="row"><div class="k">Layer</div><div class="v"><a href="https://figma.com/design/AbC123/Home?node-id=575-4740">Open in Figma ↗</a> · <code>575:4740</code></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="find">
+      <div class="head"><span class="id">T2</span><span class="title">Crowded type steps: 13 / 14 / 15 are too close to read as different levels</span><span class="sev s-med">MEDIUM</span></div>
+      <div class="body">
+        <div class="crop"><div class="clabel">Type · T2</div>
+          <div style="font-size:13px;line-height:1.3">Respond within 7 days</div>
+          <div style="font-size:14px;line-height:1.3;color:var(--high);font-weight:600">Send reminders</div>
+          <div style="font-size:15px;line-height:1.3;font-weight:600">2 disputes</div>
+        </div>
+        <div class="findmain">
+          Card body (13), buttons and rows (14) and the card title (15) are each 1pt apart. Weight is doing the work that size should, and the hierarchy blurs on a small screen.
+          <div class="row"><div class="k">Fix</div><div class="v">Drop 14. Keep the two HIG sizes in this range: <span class="quote">13 Footnote</span> and <span class="quote">15 Subhead</span>.</div></div>
+          <div class="row"><div class="k">Backs</div><div class="v">Material 3 asks for "impactful contrast between sizes" · <a href="https://m3.material.io/styles/typography/type-scale-tokens">Type scale ↗</a>. The threshold (1pt apart, or under ×1.07) is the tool's heuristic.</div></div>
+          <div class="row"><div class="k">Layer</div><div class="v"><a href="https://figma.com/design/AbC123/Home?node-id=575-4710">Open in Figma ↗</a> · <code>575:4710</code></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="find">
+      <div class="head"><span class="id">T3</span><span class="title">2 of 8 text sizes are not Apple HIG sizes: 14 (12 uses) and 32</span><span class="sev s-med">MEDIUM</span></div>
+      <div class="body">
+        <div class="crop"><div class="clabel">Off-baseline · T3</div>
+          <div class="m-tok"><span class="bad">14 / 20</span> ×12<br><span class="bad">32 / 38</span> ×1<br>HIG: 13 · 15 · 28 · 34</div>
+        </div>
+        <div class="findmain">
+          <span class="quote">14</span> is the most-used size on the screen and is not an iOS text style, so it maps to no Dynamic Type style and needs custom scaling work to follow the user's text size.
+          <div class="row"><div class="k">Fix</div><div class="v">14 → 13 (Footnote) or 15 (Subhead); 32 → 28 (Title 1) or 34 (Large Title).</div></div>
+          <div class="row"><div class="k">Backs</div><div class="v">Apple HIG text styles, Large (default) · <a href="https://developer.apple.com/design/human-interface-guidelines/typography">Typography ↗</a></div></div>
+          <div class="row"><div class="k">Layer</div><div class="v"><a href="https://figma.com/design/AbC123/Home?node-id=575-4710">Open in Figma ↗</a> · <code>575:4710</code></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="find">
+      <div class="head"><span class="id">T4</span><span class="title">Type ramp jumps 20 → 32 (×1.60), a bigger step than anywhere in HIG</span><span class="sev s-low">LOW</span></div>
+      <div class="body">
+        <div class="crop"><div class="clabel">Jump · T4</div>
+          <div style="font-size:11px;font-weight:600">Good morning <span style="color:var(--sub);font-weight:400">20</span></div>
+          <div style="font-size:20px;font-weight:700;color:var(--high)">$3,892 <span style="font-size:9px">32</span></div>
+        </div>
+        <div class="findmain">
+          The hero amount leaps from the 20pt greeting straight to 32. That contrast may be the point (D2: the money-first hero is a differentiator), so treat this as a check, not a must-fix.
+          <div class="row"><div class="k">Fix</div><div class="v">If the jump is intentional, move the amount to <span class="quote">34 Large Title</span>. HIG has 22 and 28 in between for a softer step.</div></div>
+          <div class="row"><div class="k">Backs</div><div class="v">Apple HIG text styles · <a href="https://developer.apple.com/design/human-interface-guidelines/typography">Typography ↗</a>. The largest HIG step is ×1.27 (22 → 28).</div></div>
+          <div class="row"><div class="k">Layer</div><div class="v"><a href="https://figma.com/design/AbC123/Home?node-id=575-4708">Open in Figma ↗</a> · <code>575:4708</code></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="toknote">Computed by <code>scripts/token_check.py</code> from the design's Figma data. Baselines are copied from the official Material 3 and Apple HIG pages (cited in <code>references/token-baselines.md</code>). Thresholds marked as heuristics are the tool's, not Material's or Apple's.</div>
+  </section>
+
   <section>
     <h2>Pre-review blockers — placeholder data</h2>
     <div class="find">
@@ -388,6 +489,7 @@
       <li>Reword <b>“Ignore”</b> → “Dismiss / Not now” on the disputes card (C1).</li>
       <li>Correct the misspelled tokens in the library — <b>deafult / nuetrals</b> (D1).</li>
       <li>Align the shortcut verb — <b>“Collect payment”</b> (C2) — and keep the money-owed hero (D2).</li>
+      <li>Snap spacing to the 4dp grid (<b>2/6/10/14</b> up to 4/8/12/16) and drop the 14pt text size for HIG 13 or 15 (T1 to T3).</li>
     </ol>
   </section>
 
@@ -395,7 +497,7 @@
     <h2>Share summary</h2>
     <div class="share">Mobile Home — Field Service App
 On par → slightly ahead on hierarchy; behind on copy.
-High: C1, D1 · Medium: C2, A1 (+2) · Top fixes: placeholders → “Ignore”→Dismiss → token typos
+High: C1, D1 · Medium: C2, A1, T1, T2, T3 (+2) · Top fixes: placeholders → “Ignore”→Dismiss → token typos
 
 ---
 [C1 · HIGH] “Ignore” on a financial-dispute alert is harsh
@@ -407,7 +509,13 @@ Backs: Deel · https://mobbin.com/apps/deel
 [D1 · HIGH] Misspelled token names will ship into code
 Fix: outline-default / neutrals/white before refresh propagates
 Figma: https://figma.com/design/AbC123/Home?node-id=529-14090
-Backs: — (token hygiene)</div>
+Backs: — (token hygiene)
+
+---
+[T1 · MEDIUM] 4 spacing values sit off the 4dp grid (26 of 71 uses)
+Fix: 2 -> 4; 6 -> 8; 10 -> 12; 14 -> 16 (all already in use)
+Figma: https://figma.com/design/AbC123/Home?node-id=575-4740
+Backs: Material 4dp/8dp grid · https://m2.material.io/design/layout/spacing-methods.html</div>
   </section>
 
   <section>
@@ -417,14 +525,14 @@ Backs: — (token hygiene)</div>
       <ul>
         <li><code>design:ux-copy</code> — a full voice/tone pass; C1/C2 are the worst offenders, but the greeting, promos, and empty states want a consistent voice.</li>
         <li><code>design:accessibility-review</code> — a complete WCAG audit; this pass computed contrast only (A1).</li>
-        <li><code>design:design-system</code> — token consolidation; misspelled/duplicate values (D1).</li>
+        <li><code>design:design-system</code> — token consolidation; misspelled/duplicate values (D1) and the off-grid spacing and type sizes (T1 to T3).</li>
       </ul>
-      Continue in this chat: <code>dig into C1</code> · <code>only Jobber</code> · <code>re-run copy</code> · <code>Quick on empty state</code>
+      Continue in this chat: <code>dig into C1</code> · <code>only Jobber</code> · <code>re-run copy</code> · <code>dig into T2</code> · <code>Quick on empty state</code>
     </div>
   </section>
 
   <div class="foot">
-    Illustrative sample generated by <b>ux-proofsheet</b> (Full mode). Design mock and per-finding crops are HTML recreations from design tokens; permanent Mobbin + Figma links carry the real pixels. Content is fictional; app names are real public products used as benchmark references. Scores anchored in the findings above.
+    Illustrative sample generated by <b>ux-proofsheet</b> (Full mode). Design mock and per-finding crops are HTML recreations from design tokens; permanent Mobbin + Figma links carry the real pixels. Content is fictional; app names are real public products used as benchmark references. Scores anchored in the findings above. Token layer (T1 to T4) is the real output of <code>token_check.py</code> on a hand-written Figma fixture of this screen.
   </div>
 
 </div>

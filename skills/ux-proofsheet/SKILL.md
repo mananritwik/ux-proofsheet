@@ -28,7 +28,7 @@ Paste-ready prompts: `references/prompt-cookbook.md`.
 
 ## Tools
 
-- **Figma MCP** — `get_metadata`, `get_design_context`, `get_screenshot`
+- **Figma MCP** — `get_metadata`, `get_design_context`, `get_screenshot`, `get_variable_defs`
 - **Mobbin MCP** — `search_screens`, `search_flows`, `search_sections` (primary evidence)
 - **Web search** — fallback when Mobbin is missing; competitor context
 
@@ -64,6 +64,10 @@ No design artifact? Ask for a Figma URL, screenshot, or description before proce
    `scripts/parse_figma_metadata.py` (do not paste the raw tree).
 2. `get_design_context` — labels, hierarchy, **tokens** (for HTML recreations + hygiene).
 3. `get_screenshot` — study the image yourself; report visuals are recreations.
+4. **Token layer (Full mode).** Save `get_variable_defs` and the design-context
+   code to files, then run `scripts/token_check.py <files> --file-url <figma file url>`.
+   It measures the type ramp and spacing scale against Material 3 / Apple HIG
+   (`references/token-baselines.md`). Quote its numbers; never retype or estimate them.
 
 **Large boards:** list candidate frames from the parser, pick primary flows
 (annotations, Old/New, named screens), and **state what you skip**.
@@ -112,7 +116,7 @@ Always pair recreations with permanent **View ↗** (Mobbin) and **Open in Figma
 
 | Missing | Substitute |
 |---|---|
-| Figma | No crop/link/node ID; label *source: description*. Contrast: *"not computed — no tokens"*. |
+| Figma | No crop/link/node ID; label *source: description*. Contrast: *"not computed — no tokens"*. Token layer: *"not run (no Figma data)"*. |
 | Mobbin | Cited web link per card; *"link, not embedded"*. |
 | Text-only | Labelled structural list for "design under review". |
 
@@ -122,6 +126,7 @@ Always pair recreations with permanent **View ↗** (Mobbin) and **Open in Figma
 2. ★ **Design under review** — HTML recreation of every in-scope screen (Old→New if two states).
 3. ★ **What's working** — protect differentiators.
 4. ★ **Findings by dimension** — Nav & IA, UX copy, Visual & tokens, Placeholder ("Fix before share"), Accessibility. Each: recreated crop, ID, Figma deep link, severity, quoted string, Fix, Backs. Run `scripts/contrast.py` when tokens exist.
+4b. **Token layer** (Full): ramp and spacing summary, then each `token_check.py` finding as a `T1…` finding card (crop, severity, Fix, Backs = cited baseline, Open in Figma). Label heuristic thresholds as the tool's, not Material's or Apple's.
 5. **UX copy matrix** — your string vs 3–5 apps (required on Full when copy is in scope). See rubric.
 6. ★ **Benchmark grid** — recreated element mock + permanent `mobbin_url`, same- + cross-industry labels, "Backs: [finding]", counter-evidence.
 7. **Prevalence** — pattern \| apps \| in-industry \| cross-industry.
@@ -150,9 +155,11 @@ Always pair recreations with permanent **View ↗** (Mobbin) and **Open in Figma
 - `references/evidence-tiers.md` — tiers + degradation
 - `references/search-recipes.md` — queries, retry ladder, named-competitor guarantee
 - `references/prompt-cookbook.md` — paste-ready prompts
+- `references/token-baselines.md` — cited Material 3 / HIG numbers for the token layer
 
 ## Scripts
 
 - `scripts/contrast.py` — measured WCAG ratios from token pairs
 - `scripts/parse_figma_metadata.py` — triage large `get_metadata` dumps
+- `scripts/token_check.py` — type ramp + spacing scale vs Material 3 / HIG; emits `T` finding cards
 - `scripts/embed_images.py` — optional; only if you truly have durable local assets (not the default path)
